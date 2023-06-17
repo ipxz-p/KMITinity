@@ -4,13 +4,17 @@ import Home from "./views";
 import Post from "./views/Post";
 import Login from "./views/Login";
 import PersistLogin from "./features/auth/PersistLogin";
+import Layout from "./components/Layout";
+
 function App() {
   return (
     <Routes>
       <Route element={<PersistLogin />}>
         <Route path="/" element={<Navbar />}>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="post" element={<Post />}></Route>
+          <Route element={<Layout />}>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="post" element={<Post />}></Route>
+          </Route>
         </Route>
       </Route>
       <Route path="login" element={<Login />} />

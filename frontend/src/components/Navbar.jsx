@@ -13,13 +13,13 @@ const Navbar = () => {
   }, [isSuccess, navigate])
   return (
     <div>
-        <nav className='bg-red-500 px-4 py-2 flex justify-between'>
+        <nav className='bg-dark-200 text-white px-6 h-[3.2rem] flex justify-between items-center fixed top-0 left-0 w-full'>
           <div>
             <Link to='/'>KMITinity</Link>
           </div>
           <div className='flex'>
             <div>
-              <Link to='/post'>Post</Link>
+              <Link to='/post'>Posts</Link>
             </div>
             {username === '' ? 
               <div>
