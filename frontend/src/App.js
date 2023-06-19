@@ -5,7 +5,9 @@ import Post from "./views/Post";
 import Login from "./views/Login";
 import PersistLogin from "./features/auth/PersistLogin";
 import Layout from "./components/Layout";
-
+import Signup from "./views/Signup";
+import PageNotFound from "./views/PageNotFound";
+import ForgotPassword from "./views/ForgotPassword";
 function App() {
   return (
     <Routes>
@@ -18,6 +20,9 @@ function App() {
         </Route>
       </Route>
       <Route path="login" element={<Login />} />
+      <Route path="signup" element={<Signup />} />
+      <Route path="forgotPassword" element={<ForgotPassword />} />
+      <Route path='*' exact={true} element={<PageNotFound />} />
     </Routes>
   );
 }
