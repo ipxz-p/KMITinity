@@ -2,3 +2,10 @@
 *{
     font-family: 'Rubik', sans-serif;
 }
+input:-webkit-autofill {
+    color: white !important;
+    -webkit-box-shadow: 0 0 0px 1000px #454545 inset !important;
+}
+input:-webkit-autofill{
+    -webkit-text-fill-color: white !important;
+}

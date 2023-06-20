@@ -1,3 +1,4 @@
 2023-06-12	19:13:49	419d4a96-832b-4724-8ef5-5dfe2e056125	Error: secretOrPrivateKey must have a value	POST	/auth/login	undefined
 2023-06-12	19:14:18	737c21dc-b60d-43bc-94e2-1c3a378a8598	ReferenceError: foundUser is not defined	POST	/auth/login	undefined
 2023-06-12	19:37:26	23c28508-0569-43d0-9140-1179af6bca8c	TypeError: Cannot read properties of undefined (reading 'split')	GET	/user/getAllUser	undefined
+2023-06-19	16:32:38	16f9586a-a450-4acb-89d3-4880cb703576	ValidationError: user validation failed: email: Please fill a valid email address	POST	/auth/reg	http://localhost:3000

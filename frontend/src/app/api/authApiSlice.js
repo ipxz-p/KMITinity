@@ -26,10 +26,10 @@ export const authApiSlice = apiSlice.injectEndpoints({
             }
         }),
         register: builder.mutation({
-            query: credentials => ({
+            query: userData => ({
                 url: '/auth/reg',
                 method: 'POST',
-                body: { ...credentials }
+                body: { ...userData }
             })
         }),
         refresh: builder.mutation({
@@ -46,6 +46,21 @@ export const authApiSlice = apiSlice.injectEndpoints({
                     console.log(error);
                 }
             }
+        }),
+        sendOTP: builder.mutation({
+            query: userData => ({
+                url: '/auth/sendOTP',
+                method: "POST",
+                body: { ...userData }
+            }),
+        })
+        ,
+        changePassword: builder.mutation({
+            query: userData => ({
+                url: '/auth/changePassword',
+                method: "PUT",
+                body: { ...userData }
+            }),
         })
     })
 })
@@ -54,5 +69,7 @@ export const {
     useLoginMutation,
     useLogoutMutation,
     useRegisterMutation,
-    useRefreshMutation
+    useRefreshMutation,
+    useSendOTPMutation,
+    useChangePasswordMutation
 } = authApiSlice

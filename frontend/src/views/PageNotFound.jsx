@@ -2,7 +2,11 @@ import React from 'react'
 
 const PageNotFound = () => {
   return (
-    <div className=''>PageNotFound</div>
+    <div className='bg-dark-500'>
+      <div>
+        
+      </div>
+    </div>
   )
 }
 

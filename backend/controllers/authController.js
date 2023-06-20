@@ -1,6 +1,8 @@
 import user from "../models/user.js";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken';
+import nodemailer from 'nodemailer'
+import OTPForm from '../public/views/OTPForm.js' 
 
 export const register = async (req, res) => {
     const {
@@ -101,4 +103,51 @@ export const refresh = async (req, res) => {
             res.json({ accessToken })
         }
     )
+}
+
+export const sendOTP = (req, res) => {
+    const {
+        recipient_email,
+        OTP
+    } = req.body
+    const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: process.env.MY_EMAIL,
+            pass: process.env.MY_PASSWORD,
+        },
+    });
+    const mail_configs = {
+        from: process.env.MY_EMAIL,
+        to: recipient_email,
+        subject: "KMITinity Password Recovery",
+        html: OTPForm(OTP),
+    };
+    transporter.sendMail(mail_configs, function (error, info) {
+        if (error) {
+            console.log(error);
+            return res.status(400).json({ message: `An error has occured` });
+        }
+        return res.status(200).json({ message: "Email sent succesfuly" });
+    });
+}
+
+export const changePassword = async (req, res) => {
+    const {
+        email,
+        newPassword
+    } = req.body
+    if(!email, !newPassword){
+        return res.status(400).json({
+            message: 'All fields are required'
+        })
+    }
+    const User = await user.findOne({email}).exec()
+    if (!User) {
+        return res.status(400).json({ message: 'User not found' })
+    }
+    const hashPassword = await bcrypt.hash(newPassword, 10)
+    User.password = hashPassword
+    await User.save()
+    return res.status(200).json({message: 'Success'})
 }

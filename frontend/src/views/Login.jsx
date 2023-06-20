@@ -30,7 +30,7 @@ const Login = () => {
   }
   return (
     <div className='bg-dark-500 h-screen w-screen flex justify-center items-center'>
-      <form className='bg-dark-200 rounded-md max-w-[400px] w-full p-6 text-white' onSubmit={handleLogin}>
+      <form  className='bg-dark-200 rounded-md max-w-[400px] w-full p-6 text-white' onSubmit={handleLogin}>
         <p className='text-header'>Login</p>
         <div className='bg-dark-100 rounded-md w-full flex p-2 mt-4'>
           <Mail className='mr-2' />
