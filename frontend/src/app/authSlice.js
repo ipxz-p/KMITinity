@@ -9,6 +9,7 @@ const authSlice = createSlice({
         },
         logout: (state, action) => {
             state.token = null
+            localStorage.removeItem("imgPath")
         },
     }
 })

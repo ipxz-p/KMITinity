@@ -8,6 +8,7 @@ import Layout from "./components/Layout";
 import Signup from "./views/Signup";
 import PageNotFound from "./views/PageNotFound";
 import ForgotPassword from "./views/ForgotPassword";
+import Profile from "./views/Profile";
 function App() {
   return (
     <Routes>
@@ -16,6 +17,7 @@ function App() {
           <Route element={<Layout />}>
             <Route path="/" element={<Home />}></Route>
             <Route path="post" element={<Post />}></Route>
+            <Route path="/profile/:username" element={<Profile />}></Route>
           </Route>
         </Route>
       </Route>

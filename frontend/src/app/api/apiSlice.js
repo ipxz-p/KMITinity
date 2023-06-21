@@ -22,6 +22,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
             result = await baseQuery(args, api, extraOptions)
         } else {
             if (refreshResult?.error?.status === 403) {
+                localStorage.removeItem("imgPath")
                 refreshResult.error.data.message = "Your login has expired."
             }
             return refreshResult

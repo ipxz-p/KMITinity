@@ -15,9 +15,13 @@ export const register = async (req, res) => {
             message: 'All fields are required'
         })
     }
-    const duplicate = await user.findOne({email}).exec()
-    if(duplicate){
+    const duplicateEmail = await user.findOne({email}).exec()
+    const duplicateUsername = await user.findOne({username}).exec()
+    if(duplicateEmail){
         return res.status(409).json({ message: 'Duplicate email' })
+    }
+    if(duplicateUsername){
+        return res.status(409).json({ message: 'Duplicate username' })
     }
     const hashPassword = await bcrypt.hash(password, 10)
     const User = await user.create({
@@ -52,14 +56,16 @@ export const login = async (req, res) => {
         {
             "UserInfo": {
                 "username": User.username,
-                "role": User.roles
+                "email": User.email,
+                "roles": User.roles,
+                "profileImgPath": User.profileImgPath
             }
         },
         process.env.ACCESS_TOKEN_SECRET,
         {expiresIn: '15m'}
     )
     const refreshToken = jwt.sign(
-        { "username": User.username },
+        { "email": User.email },
         process.env.REFRESH_TOKEN_SECRET,
         { expiresIn: '7d' }
     )
@@ -88,13 +94,15 @@ export const refresh = async (req, res) => {
         process.env.REFRESH_TOKEN_SECRET,
         async (err, decoded) => {
             if(err)  return res.status(403).json({ message: 'Forbidden' })
-            const foundUser = user.findOne({username: decoded.username}).exec()
+            const foundUser = await user.findOne({email: decoded.email}).exec()
             if(!foundUser) return res.status(401).json({ message: 'Unauthorized' })
             const accessToken = jwt.sign(
                 {
                 "UserInfo": {
-                    "username": decoded.username,
-                    "roles": decoded.roles
+                    "username": foundUser.username,
+                    "email": foundUser.email,
+                    "roles": foundUser.roles,
+                    "profileImgPath": foundUser.profileImgPath
                     }
                 },
                 process.env.ACCESS_TOKEN_SECRET,

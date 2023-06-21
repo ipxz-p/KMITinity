@@ -3,15 +3,20 @@ import { useSelector } from 'react-redux'
 import { selectCurrentToken } from '../app/authSlice'
 
 const useAuth = () => {
-    const token = useSelector(selectCurrentToken)
+    const token = useSelector(selectCurrentToken) || ''
     let username = ''
-    let role = ''
+    let email = ''
+    let roles = ''
+    let profileImgPath = ''
     if(token){
         const decoded = jwtDecode(token)
         username = decoded.UserInfo.username
-        role = decoded.UserInfo.role
+        email = decoded.UserInfo.email
+        roles = decoded.UserInfo.roles
+        profileImgPath = decoded.UserInfo.profileImgPath
+        localStorage.setItem("imgPath", JSON.stringify(profileImgPath))
     }
-    return {username: username, role: role}
+    return {username: username,email: email, roles: roles, profileImgPath: profileImgPath}
 }
 
 export default useAuth

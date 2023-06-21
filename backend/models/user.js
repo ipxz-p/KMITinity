@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema({
     roles:{
         type: String,
         default: 'member'
+    },
+    profileImgPath:{
+        type: String,
+        default: 'defaultImg.jpg'
     }
 })
 
