@@ -37,7 +37,7 @@ const Navbar = () => {
                   setShowMenu(true)
                   }} 
                   className='h-[2.3rem] w-[2.3rem] ml-4 rounded-full cursor-pointer' 
-                  src={`http://localhost:3500/public/img/${profileImgPath}`} alt="" />
+                  src={`${process.env.REACT_APP_BASEURL}/public/img/${profileImgPath}`} alt="" />
                   {showMenu ? <div className='bg-dark-100 border-2 border-white rounded-md absolute top-[120%] right-0'>
                     <div className='cursor-pointer flex items-center px-2 py-1' onClick={(e)=>{
                       e.preventDefault()

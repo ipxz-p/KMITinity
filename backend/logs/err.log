@@ -2,3 +2,29 @@
 2023-06-12	19:14:18	737c21dc-b60d-43bc-94e2-1c3a378a8598	ReferenceError: foundUser is not defined	POST	/auth/login	undefined
 2023-06-12	19:37:26	23c28508-0569-43d0-9140-1179af6bca8c	TypeError: Cannot read properties of undefined (reading 'split')	GET	/user/getAllUser	undefined
 2023-06-19	16:32:38	16f9586a-a450-4acb-89d3-4880cb703576	ValidationError: user validation failed: email: Please fill a valid email address	POST	/auth/reg	http://localhost:3000
+2023-06-21	20:46:41	ef3102a7-da82-4ccc-a513-8170daf66b7e	MulterError: File too large	PUT	/user/updateUser	undefined
+2023-06-21	20:49:42	9f2a4404-99f1-41dd-b1da-699c3aea69ff	TypeError: Cannot read properties of undefined (reading 'originalname')	PUT	/user/updateUser	undefined
+2023-06-21	20:57:59	947bd3ca-3743-4614-8d2e-a47d55a79564	ValidationError: user validation failed: profileImgPath: Cast to string failed for value "[
+  {
+    fieldname: 'images',
+    originalname: '64070193_groupinglaws.jpg',
+    encoding: '7bit',
+    mimetype: 'image/jpeg',
+    destination: './public/img',
+    filename: '64070193_groupinglaws.jpg',
+    path: 'public\\img\\64070193_groupinglaws.jpg',
+    size: 48671
+  }
+]" (type Array) at path "profileImgPath"	PUT	/user/updateUser	undefined
+2023-06-21	21:05:46	5f2baa08-dadb-4693-af93-3e1504b92848	ValidationError: user validation failed: profileImgPath: Cast to string failed for value "[
+  {
+    fieldname: 'images',
+    originalname: '59512cd3e7257381c38fe49ca7bf1a74.jpg',
+    encoding: '7bit',
+    mimetype: 'image/jpeg',
+    destination: './public/img',
+    filename: '59512cd3e7257381c38fe49ca7bf1a74.jpg',
+    path: 'public\\img\\59512cd3e7257381c38fe49ca7bf1a74.jpg',
+    size: 8933
+  }
+]" (type Array) at path "profileImgPath"	PUT	/user/updateUser	undefined
