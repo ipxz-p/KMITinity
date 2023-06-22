@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Outlet, Link, useNavigate } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 import { useLogoutMutation } from '../app/api/authApiSlice'
@@ -9,6 +9,7 @@ const Navbar = () => {
   const {username, roles, profileImgPath, email} = useAuth()
   const [showMenu, setShowMenu] = useState(false)
   const [logout, {isSuccess}] = useLogoutMutation()
+  const imgPath = JSON.parse(localStorage.getItem('imgPath'))
   useEffect(()=>{
     if(isSuccess){
       navigate('/')
@@ -24,7 +25,7 @@ const Navbar = () => {
             <div className='z-40' onClick={()=>setShowMenu(false)}>
               <Link to='/post'>Posts</Link>
             </div>
-            {!profileImgPath ? 
+            {!imgPath ? 
               <div>
               <Link className='ml-4' to='/login'>Login</Link>
             </div>
@@ -37,7 +38,7 @@ const Navbar = () => {
                   setShowMenu(true)
                   }} 
                   className='h-[2.3rem] w-[2.3rem] ml-4 rounded-full cursor-pointer' 
-                  src={`${process.env.REACT_APP_BASEURL}/public/img/${profileImgPath}`} alt="" />
+                  src={`${process.env.REACT_APP_BASEURL}/public/img/${imgPath}`} alt="" />
                   {showMenu ? <div className='bg-dark-100 border-2 border-white rounded-md absolute top-[120%] right-0'>
                     <div className='cursor-pointer flex items-center px-2 py-1' onClick={(e)=>{
                       e.preventDefault()

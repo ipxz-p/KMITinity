@@ -28,3 +28,24 @@
     size: 8933
   }
 ]" (type Array) at path "profileImgPath"	PUT	/user/updateUser	undefined
+2023-06-22	21:56:47	ff91be4e-7ff0-4ff9-8b67-e09e0c7303de	TypeError: Cannot read properties of undefined (reading '0')	PUT	/user/updateUser	http://localhost:3000
+2023-06-22	21:57:15	250a26b3-4e13-4633-a411-b1187d4a147e	TypeError: Cannot read properties of undefined (reading '0')	PUT	/user/updateUser	http://localhost:3000
+2023-06-22	21:58:19	e870631f-8d82-4626-a75a-9cd202a84a46	TypeError: Cannot read properties of undefined (reading '0')	PUT	/user/updateUser	http://localhost:3000
+2023-06-22	22:03:03	3d32a4fe-7dc5-481b-849e-104cc116d0bc	TypeError: Converting circular structure to JSON
+    --> starting at object with constructor 'Socket'
+    |     property 'parser' -> object with constructor 'HTTPParser'
+    --- property 'socket' closes the circle	PUT	/user/updateUser	http://localhost:3000
+2023-06-22	22:04:38	232974fb-a500-403f-a10a-862de4c5c536	TypeError: Cannot destructure property 'email' of 'req.files' as it is undefined.	PUT	/user/updateUser	http://localhost:3000
+2023-06-22	22:12:25	c7cc9e52-af6d-489e-9dc2-9d9bb0c1cbbb	TypeError: Cannot read properties of undefined (reading '0')	PUT	/user/updateUser	http://localhost:3000
+2023-06-22	22:13:10	29ce5a3c-a892-4df2-bcfc-70220b77847b	TypeError: Cannot read properties of undefined (reading '0')	PUT	/user/updateUser	http://localhost:3000
+2023-06-22	22:58:41	fd2747dc-e057-4692-801b-f9db25ba5e98	Error: Multipart: Boundary not found	PUT	/user/updateUser	http://localhost:3000
+2023-06-22	22:59:01	f4250b6e-c542-45f9-9006-090b73239f42	Error: Multipart: Boundary not found	PUT	/user/updateUser	http://localhost:3000
+2023-06-22	22:59:51	d6ce4bd6-7293-4565-bf5a-0eb99a43b83f	Error: Multipart: Boundary not found	PUT	/user/updateUser	http://localhost:3000
+2023-06-22	23:11:35	51343d34-ee9d-46a4-8875-42ca22ccf7dc	Error: Multipart: Boundary not found	PUT	/user/updateUser	http://localhost:3000
+2023-06-22	23:13:13	f64f21b4-4f1c-4056-9fd7-2bc2355b87f9	Error: Multipart: Boundary not found	PUT	/user/updateUser	http://localhost:3000
+2023-06-22	23:18:49	fc2f2464-9ca9-4dd1-ad34-74480a0d3bbe	Error: Multipart: Boundary not found	PUT	/user/updateUser	http://localhost:3000
+2023-06-22	23:19:43	1fb4a6bc-02f0-4da6-845c-3e1538a98364	Error: Unexpected end of form	PUT	/user/updateUser	http://localhost:3000
+2023-06-22	23:23:25	a855baae-d77c-4096-a216-33209ebad735	Error: Unexpected end of form	PUT	/user/updateUser	http://localhost:3000
+2023-06-22	23:24:20	f078d0fe-432c-4432-aeae-8f5ab0d7ae4d	Error: Unexpected end of form	PUT	/user/updateUser	http://localhost:3000
+2023-06-22	23:42:16	c6f4b889-f550-4b30-af6e-168cb5816c1d	TypeError: Cannot read properties of undefined (reading 'originalname')	PUT	/user/updateUser	http://localhost:3000
+2023-06-22	23:42:40	9cb9f77d-99c0-450d-8fae-f9fbaeca97b8	TypeError: Cannot read properties of undefined (reading 'originalname')	PUT	/user/updateUser	http://localhost:3000

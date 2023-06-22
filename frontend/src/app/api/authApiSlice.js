@@ -6,13 +6,22 @@ export const authApiSlice = apiSlice.injectEndpoints({
             query: credentials => ({
                 url: '/auth/login',
                 method: 'POST',
+                prepareHeaders: (headers, { getState }) => {
+                    const token = getState().auth.token
+                    if(!token) {
+                        headers.set("authorization", `Bearer ${token}`)
+                    }
+                    
+                    return headers
+                },
                 body: { ...credentials }
             })
         }),
         logout: builder.mutation({
             query: () => ({
                 url: '/auth/logout',
-                method: "POST"
+                method: "POST",
+                
             }),
             async onQueryStarted(args, { dispatch, queryFulfilled }) {
                 try {
@@ -35,7 +44,15 @@ export const authApiSlice = apiSlice.injectEndpoints({
         refresh: builder.mutation({
             query: () => ({
                 url: '/auth/refresh',
-                method: "GET"
+                method: "GET",
+                prepareHeaders: (headers, { getState }) => {
+                    const token = getState().auth.token
+                    if(!token) {
+                        headers.set("authorization", `Bearer ${token}`)
+                    }
+                    
+                    return headers
+                }
             }),
             async onQueryStarted(args, { dispatch, queryFulfilled }) {
                 try {

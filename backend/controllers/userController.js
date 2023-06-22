@@ -17,14 +17,14 @@ export const updateUser = async (req, res) => {
     const {
         email
     } = req.body
-    const imgPath = req.files[0].originalname
     const User = await user.findOne({email}).exec()
     if (!User) {
         return res.status(400).json({ message: 'User not found' })
     }
-    if(imgPath){
-        User.profileImgPath = imgPath
+    if(req.files){
+        User.profileImgPath = req.files[0].originalname
     }
+    
     await User.save()
     return res.status(200).json({message: 'Success'})
 }
