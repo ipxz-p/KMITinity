@@ -3,13 +3,31 @@ import { Outlet, Link, useNavigate } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 import { useLogoutMutation } from '../app/api/authApiSlice'
 import { LogOut, User } from 'lucide-react'
+import { useGetUserQuery } from '../app/api/userApiSlice'
 
 const Navbar = () => {
   const navigate = useNavigate()
   const {username, roles, profileImgPath, email} = useAuth()
   const [showMenu, setShowMenu] = useState(false)
   const [logout, {isSuccess}] = useLogoutMutation()
-  const imgPath = JSON.parse(localStorage.getItem('imgPath'))
+  let imgPath = JSON.parse(localStorage.getItem('imgPath'))
+  const { user } = useGetUserQuery("usersList", {
+    selectFromResult: ({ data }) => {
+      if (data) {
+        const userKeys = Object.keys(data.entities);
+        for (let i = 0; i < userKeys.length; i++) {
+          const userProp = userKeys[i];
+          if (data.entities[userProp].email === email) {
+            return {
+              user: data.entities[userProp]
+            };
+          }
+        }
+      }
+      return { user: null }; // หรือค่าเริ่มต้นที่ต้องการให้ถ้าไม่พบผู้ใช้
+    }
+  });
+  
   useEffect(()=>{
     if(isSuccess){
       navigate('/')
@@ -38,7 +56,7 @@ const Navbar = () => {
                   setShowMenu(true)
                   }} 
                   className='h-[2.3rem] w-[2.3rem] ml-4 rounded-full cursor-pointer' 
-                  src={`${process.env.REACT_APP_BASEURL}/public/img/${imgPath}`} alt="" />
+                  src={`${process.env.REACT_APP_BASEURL}/public/img/${user?.profileImgPath ?? imgPath}`} alt="" />
                   {showMenu ? <div className='bg-dark-100 border-2 border-white rounded-md absolute top-[120%] right-0'>
                     <div className='cursor-pointer flex items-center px-2 py-1' onClick={(e)=>{
                       e.preventDefault()

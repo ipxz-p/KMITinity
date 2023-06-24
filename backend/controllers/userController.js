@@ -26,11 +26,14 @@ export const updateUser = async (req, res) => {
     }
     
     await User.save()
-    return res.status(200).json({message: 'Success'})
+    return res.status(200).json({message: req.files[0].originalname})
 }
 export const getAllUser = async (req, res) => {
-    const User = await user.find().updateMany({}, { $set: { profileImgPath: 'defaultImg.jpg' } })
+    // const User = await user.find().updateMany({}, { $set: { profileImgPath: 'defaultImg.jpg' } })
     // user.updateMany({}, {$set:{profileImgPath: 'defaultImg.jpg'}})
-
-    res.send(User)
+    const User = await user.find().select("-password").lean()
+    if (!User?.length) {
+        return res.status(400).json({ message: 'No users found' })
+    }
+    res.status(200).json(User)
 }

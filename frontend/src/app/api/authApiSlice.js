@@ -60,6 +60,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
                     const { accessToken } = data
                     dispatch(setCredentials({ accessToken }))
                 } catch (error) {
+                    localStorage.removeItem("imgPath")
                     console.log(error);
                 }
             }
