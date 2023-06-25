@@ -49,3 +49,8 @@
 2023-06-22	23:24:20	f078d0fe-432c-4432-aeae-8f5ab0d7ae4d	Error: Unexpected end of form	PUT	/user/updateUser	http://localhost:3000
 2023-06-22	23:42:16	c6f4b889-f550-4b30-af6e-168cb5816c1d	TypeError: Cannot read properties of undefined (reading 'originalname')	PUT	/user/updateUser	http://localhost:3000
 2023-06-22	23:42:40	9cb9f77d-99c0-450d-8fae-f9fbaeca97b8	TypeError: Cannot read properties of undefined (reading 'originalname')	PUT	/user/updateUser	http://localhost:3000
+2023-06-25	20:22:57	c62dd598-86e5-42db-bb11-fedfff3b1778	TypeError: Cannot read properties of undefined (reading 'originalname')	PUT	/user/updateUser	http://localhost:3000
+2023-06-25	20:23:15	15a21203-4682-42ce-9773-902591d5c4a8	TypeError: Cannot read properties of undefined (reading 'originalname')	PUT	/user/updateUser	http://localhost:3000
+2023-06-25	20:25:31	b30a3fe1-c1ea-4378-9380-e7913cd46152	TypeError: Cannot read properties of undefined (reading 'originalname')	PUT	/user/updateUser	http://localhost:3000
+2023-06-25	20:27:35	17d1beae-9ffe-4c5b-b49d-539508f79044	TypeError: Cannot read properties of undefined (reading 'originalname')	PUT	/user/updateUser	http://localhost:3000
+2023-06-25	20:28:41	3e5ea9bf-0865-4ef3-a075-d56933bd51c2	TypeError: Cannot read properties of undefined (reading 'originalname')	PUT	/user/updateUser	http://localhost:3000

@@ -26,10 +26,11 @@ export const userApiSlice = apiSlice.injectEndpoints({
             }
         }),
         updateUser: builder.mutation({
-            query: ({email, images}) => {
+            query: ({email, images, username}) => {
                 const data = new FormData()
                 data.append('images', images[0])
                 data.append('email', email)
+                data.append('username', username)
                 return {
                     url: '/user/updateUser',
                     method: 'PUT',
