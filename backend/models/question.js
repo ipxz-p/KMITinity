@@ -8,9 +8,10 @@ const questionSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    comments: Object,
-    like: Number,
-    views: Number,
+    images: [String],
+    comments: [Object],
+    like: [String],
+    views: [String],
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users',

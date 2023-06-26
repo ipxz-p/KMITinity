@@ -10,6 +10,7 @@ import ForgotPassword from "./views/ForgotPassword";
 import Profile from "./views/Profile";
 import Blogs from "./views/Blogs";
 import Questions from "./views/Questions";
+import CreateQuestion from "./views/CreateQuestion";
 function App() {
   return (
     <Routes>
@@ -19,6 +20,7 @@ function App() {
             <Route path="/" element={<Home />}></Route>
             <Route path="blogs" element={<Blogs />}></Route>
             <Route path="questions" element={<Questions />}></Route>
+            <Route path="questions/create" element={<CreateQuestion />}></Route>
             <Route path="/profile/:username" element={<Profile />}></Route>
           </Route>
         </Route>
