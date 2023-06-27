@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const questionSchema = mongoose.Schema({
+const questionSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true

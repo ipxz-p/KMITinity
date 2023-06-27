@@ -11,7 +11,7 @@ import { fileURLToPath } from 'url';
 import errHandler from './middleware/errHandler.js';
 import authRoute from './routes/authRoute.js'
 import userRoute from './routes/userRoute.js'
-
+import questionRoute from './routes/questionRoute.js'
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const PORT = process.env.PORT || 3500
@@ -30,6 +30,7 @@ app.use(cors({
 app.use('/', express.static(path.join(__dirname,)))
 app.use('/auth', authRoute)
 app.use('/user', userRoute)
+app.use('/question', questionRoute)
 app.use(errHandler)
 mongoose.connection.once("open", () => {
     console.log("Connected to MongoDB");

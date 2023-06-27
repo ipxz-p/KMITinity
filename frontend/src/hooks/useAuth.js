@@ -9,6 +9,7 @@ const useAuth = () => {
     let email = ''
     let roles = ''
     let profileImgPath = ''
+    let id = ''
     if (token) {
         const decoded = jwtDecode(token)
         username = decoded.UserInfo.username
@@ -34,8 +35,9 @@ const useAuth = () => {
     if(user){
         profileImgPath = user?.profileImgPath
         localStorage.setItem("imgPath", JSON.stringify(profileImgPath))
+        id = user?.id
     }
-    return { username: username, email: email, roles: roles, profileImgPath: profileImgPath }
+    return { username: username, email: email, roles: roles, profileImgPath: profileImgPath, id: id }
 }
 
 export default useAuth
