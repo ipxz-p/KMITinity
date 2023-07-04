@@ -17,12 +17,13 @@ export const createQuestion = async (req, res) => {
         title,
         description,
         owner,
-        tags,
+        tags = [],
     } = req.body
+    
     if(!title || title === '' || !description || description === ''){
         return res.status(400).json({message: 'Please enter title and description'})
     }
-    const images = req.files
+    const images = req.files.map((file) => file.originalname);
     const Question = await question.create({
         title,
         description,
@@ -35,4 +36,9 @@ export const createQuestion = async (req, res) => {
     }else{
         res.status(400).json({message: 'Error occured'})
     }
+}
+
+export const getAllQuestion = async (req, res) => {
+    const Question = await question.find().lean()
+    res.status(200).json(Question)
 }

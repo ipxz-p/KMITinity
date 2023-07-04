@@ -54,3 +54,139 @@
 2023-06-25	20:25:31	b30a3fe1-c1ea-4378-9380-e7913cd46152	TypeError: Cannot read properties of undefined (reading 'originalname')	PUT	/user/updateUser	http://localhost:3000
 2023-06-25	20:27:35	17d1beae-9ffe-4c5b-b49d-539508f79044	TypeError: Cannot read properties of undefined (reading 'originalname')	PUT	/user/updateUser	http://localhost:3000
 2023-06-25	20:28:41	3e5ea9bf-0865-4ef3-a075-d56933bd51c2	TypeError: Cannot read properties of undefined (reading 'originalname')	PUT	/user/updateUser	http://localhost:3000
+2023-07-04	16:11:56	22f39769-5e96-4752-9533-af37a0b67f9e	ValidationError: question validation failed: images.0: Cast to [string] failed for value "[\n' +
+  '  {\n' +
+  "    fieldname: 'images',\n" +
+  "    originalname: '7e35325d8a083d28c7c1368f77e2846f.jpg',\n" +
+  "    encoding: '7bit',\n" +
+  "    mimetype: 'image/jpeg',\n" +
+  "    destination: './public/img',\n" +
+  "    filename: '7e35325d8a083d28c7c1368f77e2846f.jpg',\n" +
+  "    path: 'public\\\\img\\\\7e35325d8a083d28c7c1368f77e2846f.jpg',\n" +
+  '    size: 10344\n' +
+  '  },\n' +
+  '  {\n' +
+  "    fieldname: 'images',\n" +
+  "    originalname: '59512cd3e7257381c38fe49ca7bf1a74.jpg',\n" +
+  "    encoding: '7bit',\n" +
+  "    mimetype: 'image/jpeg',\n" +
+  "    destination: './public/img',\n" +
+  "    filename: '59512cd3e7257381c38fe49ca7bf1a74.jpg',\n" +
+  "    path: 'public\\\\img\\\\59512cd3e7257381c38fe49ca7bf1a74.jpg',\n" +
+  '    size: 8933\n' +
+  '  }\n' +
+  ']" (type string) at path "images.0" because of "CastError"	POST	/question/createQuestion	http://localhost:3000
+2023-07-04	16:12:03	725c7ec3-b1c3-4c69-9675-322df2523f66	ValidationError: question validation failed: images.0: Cast to [string] failed for value "[\n' +
+  '  {\n' +
+  "    fieldname: 'images',\n" +
+  "    originalname: '7e35325d8a083d28c7c1368f77e2846f.jpg',\n" +
+  "    encoding: '7bit',\n" +
+  "    mimetype: 'image/jpeg',\n" +
+  "    destination: './public/img',\n" +
+  "    filename: '7e35325d8a083d28c7c1368f77e2846f.jpg',\n" +
+  "    path: 'public\\\\img\\\\7e35325d8a083d28c7c1368f77e2846f.jpg',\n" +
+  '    size: 10344\n' +
+  '  },\n' +
+  '  {\n' +
+  "    fieldname: 'images',\n" +
+  "    originalname: '59512cd3e7257381c38fe49ca7bf1a74.jpg',\n" +
+  "    encoding: '7bit',\n" +
+  "    mimetype: 'image/jpeg',\n" +
+  "    destination: './public/img',\n" +
+  "    filename: '59512cd3e7257381c38fe49ca7bf1a74.jpg',\n" +
+  "    path: 'public\\\\img\\\\59512cd3e7257381c38fe49ca7bf1a74.jpg',\n" +
+  '    size: 8933\n' +
+  '  }\n' +
+  ']" (type string) at path "images.0" because of "CastError"	POST	/question/createQuestion	http://localhost:3000
+2023-07-04	16:12:59	b1621d74-17ab-4730-bba9-8293f1bf2002	TypeError: Cannot read properties of undefined (reading 'length')	POST	/question/createQuestion	http://localhost:3000
+2023-07-04	16:13:54	3813475f-b924-40f3-863d-4da42e9fecb7	TypeError: Cannot read properties of undefined (reading 'length')	POST	/question/createQuestion	http://localhost:3000
+2023-07-04	16:15:18	742bbcef-44f5-4b32-8d09-fb42a55140da	TypeError: Cannot read properties of undefined (reading 'length')	POST	/question/createQuestion	http://localhost:3000
+2023-07-04	16:15:54	c1767675-c68a-4ad5-a3fa-48871c411338	TypeError: Assignment to constant variable.	POST	/question/createQuestion	http://localhost:3000
+2023-07-04	16:28:44	615f0526-a8d0-41d0-97ad-2562ad3dcd5b	ValidationError: question validation failed: images.0: Cast to [string] failed for value "[\n' +
+  '  {\n' +
+  "    fieldname: 'images',\n" +
+  "    originalname: '59512cd3e7257381c38fe49ca7bf1a74.jpg',\n" +
+  "    encoding: '7bit',\n" +
+  "    mimetype: 'image/jpeg',\n" +
+  "    destination: './public/img',\n" +
+  "    filename: '59512cd3e7257381c38fe49ca7bf1a74.jpg',\n" +
+  "    path: 'public\\\\img\\\\59512cd3e7257381c38fe49ca7bf1a74.jpg',\n" +
+  '    size: 8933\n' +
+  '  },\n' +
+  '  {\n' +
+  "    fieldname: 'images',\n" +
+  "    originalname: '7e35325d8a083d28c7c1368f77e2846f.jpg',\n" +
+  "    encoding: '7bit',\n" +
+  "    mimetype: 'image/jpeg',\n" +
+  "    destination: './public/img',\n" +
+  "    filename: '7e35325d8a083d28c7c1368f77e2846f.jpg',\n" +
+  "    path: 'public\\\\img\\\\7e35325d8a083d28c7c1368f77e2846f.jpg',\n" +
+  '    size: 10344\n' +
+  '  }\n' +
+  ']" (type string) at path "images.0" because of "CastError"	POST	/question/createQuestion	http://localhost:3000
+2023-07-04	16:29:18	706dd864-5107-4b9d-aa94-9c629c96acc1	ValidationError: question validation failed: images.0: Cast to [string] failed for value "[\n' +
+  '  {\n' +
+  "    fieldname: 'images',\n" +
+  "    originalname: '59512cd3e7257381c38fe49ca7bf1a74.jpg',\n" +
+  "    encoding: '7bit',\n" +
+  "    mimetype: 'image/jpeg',\n" +
+  "    destination: './public/img',\n" +
+  "    filename: '59512cd3e7257381c38fe49ca7bf1a74.jpg',\n" +
+  "    path: 'public\\\\img\\\\59512cd3e7257381c38fe49ca7bf1a74.jpg',\n" +
+  '    size: 8933\n' +
+  '  },\n' +
+  '  {\n' +
+  "    fieldname: 'images',\n" +
+  "    originalname: '7e35325d8a083d28c7c1368f77e2846f.jpg',\n" +
+  "    encoding: '7bit',\n" +
+  "    mimetype: 'image/jpeg',\n" +
+  "    destination: './public/img',\n" +
+  "    filename: '7e35325d8a083d28c7c1368f77e2846f.jpg',\n" +
+  "    path: 'public\\\\img\\\\7e35325d8a083d28c7c1368f77e2846f.jpg',\n" +
+  '    size: 10344\n' +
+  '  }\n' +
+  ']" (type string) at path "images.0" because of "CastError"	POST	/question/createQuestion	http://localhost:3000
+2023-07-04	16:31:27	5f6d4e3b-9dee-4f31-bbb0-9235742ee60f	ValidationError: question validation failed: images.0: Cast to [string] failed for value "[\n' +
+  '  {\n' +
+  "    fieldname: 'images',\n" +
+  "    originalname: '7e35325d8a083d28c7c1368f77e2846f.jpg',\n" +
+  "    encoding: '7bit',\n" +
+  "    mimetype: 'image/jpeg',\n" +
+  "    destination: './public/img',\n" +
+  "    filename: '7e35325d8a083d28c7c1368f77e2846f.jpg',\n" +
+  "    path: 'public\\\\img\\\\7e35325d8a083d28c7c1368f77e2846f.jpg',\n" +
+  '    size: 10344\n' +
+  '  },\n' +
+  '  {\n' +
+  "    fieldname: 'images',\n" +
+  "    originalname: '59512cd3e7257381c38fe49ca7bf1a74.jpg',\n" +
+  "    encoding: '7bit',\n" +
+  "    mimetype: 'image/jpeg',\n" +
+  "    destination: './public/img',\n" +
+  "    filename: '59512cd3e7257381c38fe49ca7bf1a74.jpg',\n" +
+  "    path: 'public\\\\img\\\\59512cd3e7257381c38fe49ca7bf1a74.jpg',\n" +
+  '    size: 8933\n' +
+  '  }\n' +
+  ']" (type string) at path "images.0" because of "CastError"	POST	/question/createQuestion	http://localhost:3000
+2023-07-04	16:41:20	4efd2685-7234-4fa7-ad22-1239d1ce6a6d	ValidationError: question validation failed: images.0: Cast to [string] failed for value "[\n' +
+  '  {\n' +
+  "    fieldname: 'images',\n" +
+  "    originalname: '7e35325d8a083d28c7c1368f77e2846f.jpg',\n" +
+  "    encoding: '7bit',\n" +
+  "    mimetype: 'image/jpeg',\n" +
+  "    destination: './public/img',\n" +
+  "    filename: '7e35325d8a083d28c7c1368f77e2846f.jpg',\n" +
+  "    path: 'public\\\\img\\\\7e35325d8a083d28c7c1368f77e2846f.jpg',\n" +
+  '    size: 10344\n' +
+  '  },\n' +
+  '  {\n' +
+  "    fieldname: 'images',\n" +
+  "    originalname: '59512cd3e7257381c38fe49ca7bf1a74.jpg',\n" +
+  "    encoding: '7bit',\n" +
+  "    mimetype: 'image/jpeg',\n" +
+  "    destination: './public/img',\n" +
+  "    filename: '59512cd3e7257381c38fe49ca7bf1a74.jpg',\n" +
+  "    path: 'public\\\\img\\\\59512cd3e7257381c38fe49ca7bf1a74.jpg',\n" +
+  '    size: 8933\n' +
+  '  }\n' +
+  ']" (type string) at path "images.0" because of "CastError"	POST	/question/createQuestion	http://localhost:3000

@@ -32,7 +32,7 @@ export const questionApiSlice = apiSlice.injectEndpoints({
                 data.append('description', description)
                 data.append('owner', owner)
                 images.forEach((image) => {
-                    data.append('images', image)
+                    data.append('images', image[0], image[0].name)
                 });
                 tags.forEach((tag) => {
                     data.append('tags', tag)

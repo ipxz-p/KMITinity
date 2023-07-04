@@ -35,6 +35,7 @@ const Profile = () => {
   }, [user])
   const handleFileChange = (event) => {
     const file = event.target.files[0];
+    console.log(event.target.files);
     setFile(event.target.files)
     const url = URL.createObjectURL(file);
     setImg(url);

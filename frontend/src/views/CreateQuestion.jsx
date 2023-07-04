@@ -3,7 +3,9 @@ import { ImagePlus, X } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { useCreateQuestionMutation } from '../app/api/questionApislice'
 import useAuth from '../hooks/useAuth'
+import { useNavigate } from 'react-router-dom'
 const CreateQuestion = () => {
+    const navigate = useNavigate()
     const {id} = useAuth()
     const [title, setTitle] = useState('')
     const [des, setDes] = useState('')
@@ -22,13 +24,10 @@ const CreateQuestion = () => {
                 description: des, owner: id, 
                 tags: tags, images: imgs }).unwrap()
             alert(res.message)
+            navigate('/questions')
         } catch (error) {
             console.log(error);
         }
-        // imgs.forEach(img=>{
-        //     console.log(img);
-        // })
-        console.log(imgs);
     }
     const handleAddTags = (e) => {
         if (e.key === 'Enter' && tagValue !== '') {
