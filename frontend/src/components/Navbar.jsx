@@ -40,12 +40,6 @@ const Navbar = () => {
             <Link to='/'>KMITinity</Link>
           </div>
           <div className='flex justify-center items-center'>
-            <div className='z-40' onClick={()=>setShowMenu(false)}>
-              <Link to='/questions'>Questions</Link>
-            </div>
-            <div className='z-40' onClick={()=>setShowMenu(false)}>
-              <Link className='ml-4' to='/blogs'>Blogs</Link>
-            </div>
             {!imgPath ? 
               <div>
               <Link className='ml-4' to='/login'>Login</Link>

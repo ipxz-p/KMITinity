@@ -190,3 +190,7 @@
   '    size: 8933\n' +
   '  }\n' +
   ']" (type string) at path "images.0" because of "CastError"	POST	/question/createQuestion	http://localhost:3000
+2023-07-05	19:25:00	59baab79-f391-40e2-aa8d-5b1272baf2d6	MissingSchemaError: Schema hasn't been registered for model "users".
+Use mongoose.model(name, schema)	GET	/question/getAllQuestion	http://localhost:3000
+2023-07-05	19:25:05	9eab770b-0538-4ad9-996f-a3a2f4ca4ec8	MissingSchemaError: Schema hasn't been registered for model "users".
+Use mongoose.model(name, schema)	GET	/question/getAllQuestion	http://localhost:3000

@@ -24,7 +24,7 @@ const CreateQuestion = () => {
                 description: des, owner: id, 
                 tags: tags, images: imgs }).unwrap()
             alert(res.message)
-            navigate('/questions')
+            navigate('/')
         } catch (error) {
             console.log(error);
         }

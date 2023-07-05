@@ -1,4 +1,5 @@
 import question from "../models/question.js";
+import user from "../models/user.js";
 import multer from 'multer'
 var storage = multer.diskStorage({
     destination: function (req, file, callback) {
@@ -39,6 +40,9 @@ export const createQuestion = async (req, res) => {
 }
 
 export const getAllQuestion = async (req, res) => {
-    const Question = await question.find().lean()
+    const Question = await question.find().populate({
+        path: 'owner',
+        select: 'profileImgPath username'
+    }).lean()
     res.status(200).json(Question)
 }

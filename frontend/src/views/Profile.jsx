@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import useAuth from '../hooks/useAuth'
 import { useGetUserQuery, useUpdateUserMutation } from '../app/api/userApiSlice'
-import { Mail, User } from 'lucide-react'
+import { Mail, User, Pen } from 'lucide-react'
 
 const Profile = () => {
   const [updateUser, {isSuccess, isError}] = useUpdateUserMutation()
@@ -58,11 +58,14 @@ const Profile = () => {
       encType="multipart/form-data"
       onSubmit={handleUpdateUser}
       >
-        <div className='relative flex-shrink-0 basis-[300px] mx-auto'>
-          <img className='w-[300px] relative h-[300px] rounded-full' 
+        <div className='group relative flex-shrink-0 basis-[300px] mx-auto rounded-full'>
+          <img className='w-[300px] relative h-[300px] rounded-full group-hover:opacity-70' 
           // src={`${process.env.REACT_APP_BASEURL}/public/img/${img}`} 
           src={file ? img : `${process.env.REACT_APP_BASEURL}/public/img/${img}`}
           />
+          <div className='absolute inset-0 w-[300px] h-[300px] rounded-full cursor-pointer hidden group-hover:flex items-center justify-center'>
+            <Pen className='h-10 w-10' />
+          </div>
           <input onChange={(e) => {
             handleFileChange(e)
           }} type="file" name="images" id="" accept='.jpg,.png' className='absolute inset-0 opacity-0 w-[300px] h-[300px] rounded-full cursor-pointer' />
@@ -70,7 +73,7 @@ const Profile = () => {
         <div className='lg:ml-12 lg:pl-12 lg:border-l-gray-400 lg:border-l-2 
         w-full
         '>
-          <div className='text-header font-semibold'>
+          <div className='text-header font-semibold mt-2'>
             Your infomation
           </div>
           <div className='sm:flex gap-4'>
