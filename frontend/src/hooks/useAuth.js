@@ -1,9 +1,12 @@
 import jwtDecode from 'jwt-decode'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { selectCurrentToken } from '../app/authSlice'
 import { useGetUserQuery } from '../app/api/userApiSlice';
+import { setUserData } from '../app/userSlice';
+import { useEffect } from 'react';
 
 const useAuth = () => {
+    const dispatch = useDispatch()
     const token = useSelector(selectCurrentToken) || ''
     let username = ''
     let email = ''
@@ -32,11 +35,19 @@ const useAuth = () => {
             return { user: null }; // หรือค่าเริ่มต้นที่ต้องการให้ถ้าไม่พบผู้ใช้
         }
     });
-    if(user){
-        profileImgPath = user?.profileImgPath
-        localStorage.setItem("imgPath", JSON.stringify(profileImgPath))
-        id = user?.id
-    }
+    useEffect(() => {
+        if (user) {
+            profileImgPath = user?.profileImgPath;
+            id = user?.id;
+            const userData = {
+                username: user?.username,
+                email: user?.email,
+                profileImgPath: user?.profileImgPath
+            };
+            localStorage.setItem("imgPath", JSON.stringify(profileImgPath));
+            dispatch(setUserData(userData));
+        }
+    }, [dispatch, user]);
     return { username: username, email: email, roles: roles, profileImgPath: profileImgPath, id: id }
 }
 

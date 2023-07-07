@@ -1,5 +1,6 @@
 import { apiSlice } from "./apiSlice";
-import { setCredentials, logout } from "../authSlice";
+import { setCredentials, logout, selectCurrentToken } from "../authSlice";
+import { setUserData } from "../userSlice";
 export const authApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         login: builder.mutation({
@@ -26,6 +27,11 @@ export const authApiSlice = apiSlice.injectEndpoints({
             async onQueryStarted(args, { dispatch, queryFulfilled }) {
                 try {
                     dispatch(logout())
+                    dispatch(setUserData({
+                        username: null,
+                        email: null,
+                        profileImgPath: null
+                    }))
                     setTimeout(() => {
                         dispatch(apiSlice.util.resetApiState())
                     }, 1000)

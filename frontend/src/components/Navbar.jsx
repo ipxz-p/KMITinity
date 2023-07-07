@@ -4,13 +4,14 @@ import useAuth from '../hooks/useAuth'
 import { useLogoutMutation } from '../app/api/authApiSlice'
 import { LogOut, User } from 'lucide-react'
 import { useGetUserQuery } from '../app/api/userApiSlice'
+import { selectUserData } from '../app/userSlice'
+import { useSelector } from 'react-redux'
 
 const Navbar = () => {
   const navigate = useNavigate()
   const {username, roles, profileImgPath, email} = useAuth()
   const [showMenu, setShowMenu] = useState(false)
   const [logout, {isSuccess}] = useLogoutMutation()
-  let imgPath = JSON.parse(localStorage.getItem('imgPath'))
   const { user } = useGetUserQuery("usersList", {
     selectFromResult: ({ data }) => {
       if (data) {
@@ -27,7 +28,7 @@ const Navbar = () => {
       return { user: null }; // หรือค่าเริ่มต้นที่ต้องการให้ถ้าไม่พบผู้ใช้
     }
   });
-  
+  const userData = useSelector(selectUserData)
   useEffect(()=>{
     if(isSuccess){
       navigate('/')
@@ -40,7 +41,7 @@ const Navbar = () => {
             <Link to='/'>KMITinity</Link>
           </div>
           <div className='flex justify-center items-center'>
-            {!imgPath ? 
+            {!userData?.profileImgPath ? 
               <div>
               <Link className='ml-4' to='/login'>Login</Link>
             </div>
@@ -53,8 +54,9 @@ const Navbar = () => {
                   setShowMenu(true)
                   }} 
                   className='h-[2.3rem] w-[2.3rem] ml-4 rounded-full cursor-pointer' 
-                  src={`${process.env.REACT_APP_BASEURL}/public/img/${user?.profileImgPath ?? imgPath}`} alt="" />
-                  {showMenu ? <div className='bg-dark-100 border-2 border-white rounded-md absolute top-[120%] right-0'>
+                  src={`${process.env.REACT_APP_BASEURL}/public/img/${userData?.profileImgPath}`} alt="" />
+                  {showMenu && (
+                    <div className='bg-dark-100 border-2 border-white rounded-md absolute top-[120%] right-0'>
                     <div className='cursor-pointer flex items-center px-2 py-1' onClick={(e)=>{
                       e.preventDefault()
                       const bool = false;
@@ -71,17 +73,17 @@ const Navbar = () => {
                       <LogOut className='h-4 w-4'/>
                       <p className='ml-2'>logout</p>
                     </div>
-                  </div> : ''}
+                  </div>
+                  ) 
+                }
                 </div>
-                {showMenu ? 
-                <div onClick={()=>{
-                  if(showMenu){
-                    setShowMenu(false)
-                  }
-                }} className='fixed inset-0 z-30'>
-                </div>
-                :
-                ''
+                {showMenu && (
+                  <div onClick={()=>{
+                    if(showMenu){
+                      setShowMenu(false)
+                    }
+                  }} className='fixed inset-0 z-30'>
+                  </div>)
                 }
               </div>
               )

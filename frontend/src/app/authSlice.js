@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { setUserData } from "./userSlice";
 const authSlice = createSlice({
     name: 'auth',
     initialState: { token: null },
@@ -9,6 +10,12 @@ const authSlice = createSlice({
         },
         logout: (state, action) => {
             state.token = null
+            const userData = {
+                username: null,
+                email: null,
+                profileImgPath: null
+            };
+            setUserData(userData)
             localStorage.removeItem("imgPath")
         },
     }

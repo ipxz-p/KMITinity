@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import useAuth from '../hooks/useAuth'
-import { useGetUserQuery, useUpdateUserMutation } from '../app/api/userApiSlice'
+import { useUpdateUserMutation } from '../app/api/userApiSlice'
 import { Mail, User, Pen } from 'lucide-react'
+import { useSelector } from 'react-redux'
+import { selectUserData } from '../app/userSlice'
 
 const Profile = () => {
   const [updateUser, {isSuccess, isError}] = useUpdateUserMutation()
@@ -9,33 +11,15 @@ const Profile = () => {
   const [file, setFile] = useState('');
   const [emailProfile, setEmailProfile] = useState('')
   const [usernameProfile, setUsernameProfile] = useState('')
-  const { user } = useGetUserQuery("usersList", {
-    selectFromResult: ({ data }) => {
-      if (data) {
-        const userKeys = Object.keys(data.entities);
-        for (let i = 0; i < userKeys.length; i++) {
-          const userProp = userKeys[i];
-          if (data.entities[userProp].email === email) {
-            
-            return {
-              user: data.entities[userProp]
-            };
-          }
-        }
-        
-      }
-      return { user: null }; // หรือค่าเริ่มต้นที่ต้องการให้ถ้าไม่พบผู้ใช้
-    }
-  });
   const [img, setImg] = useState('')
+  const userData = useSelector(selectUserData)
   useEffect(()=>{
-    setImg(user?.profileImgPath)
-    setEmailProfile(user?.email)
-    setUsernameProfile(user?.username)
-  }, [user])
+    setImg(userData?.profileImgPath)
+    setEmailProfile(userData?.email)
+    setUsernameProfile(userData?.username)
+  }, [userData])
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    console.log(event.target.files);
     setFile(event.target.files)
     const url = URL.createObjectURL(file);
     setImg(url);
@@ -61,7 +45,7 @@ const Profile = () => {
         <div className='group relative flex-shrink-0 basis-[300px] mx-auto rounded-full'>
           <img className='w-[300px] relative h-[300px] rounded-full group-hover:opacity-70' 
           // src={`${process.env.REACT_APP_BASEURL}/public/img/${img}`} 
-          src={file ? img : `${process.env.REACT_APP_BASEURL}/public/img/${img}`}
+          src={file ? img :`${process.env.REACT_APP_BASEURL}/public/img/${userData.profileImgPath}`}
           />
           <div className='absolute inset-0 w-[300px] h-[300px] rounded-full cursor-pointer hidden group-hover:flex items-center justify-center'>
             <Pen className='h-10 w-10' />
