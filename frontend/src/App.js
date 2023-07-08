@@ -9,6 +9,7 @@ import ForgotPassword from "./views/ForgotPassword";
 import Profile from "./views/Profile";
 import Questions from "./views/Questions";
 import CreateQuestion from "./views/CreateQuestion";
+import Question from "./views/Question";
 function App() {
   return (
     <Routes>
@@ -18,6 +19,7 @@ function App() {
             <Route path="/" element={<Questions />}></Route>
             <Route path="questions/create" element={<CreateQuestion />}></Route>
             <Route path="/profile/:username" element={<Profile />}></Route>
+            <Route path="/question/:id" element={<Question />}></Route>
           </Route>
         </Route>
       </Route>

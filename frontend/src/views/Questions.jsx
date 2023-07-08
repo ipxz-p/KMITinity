@@ -1,6 +1,6 @@
 import { Eye, Heart, MessageSquare } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useGetQuestionQuery } from '../app/api/questionApislice'
 
 const Questions = () => {
@@ -25,7 +25,7 @@ const Questions = () => {
         </div>
         <div className='mt-2 grid md:grid-cols-2 gap-3 pb-4'>
           {questions.map((question) => (
-              <div className='p-2 bg-dark-300 rounded-md cursor-pointer flex flex-col justify-between' key={question._id}>
+              <Link to={`question/${question._id}`} className='p-2 bg-dark-300 rounded-md cursor-pointer flex flex-col justify-between' key={question._id}>
                 <div>
                   <p className='truncate'>{question['title']}</p>
                   <p className='text-small text-gray-400 truncate'>{question['description']}</p>
@@ -69,7 +69,7 @@ const Questions = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
               ))
             }
         </div>
