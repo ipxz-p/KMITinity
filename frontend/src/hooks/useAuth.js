@@ -42,7 +42,8 @@ const useAuth = () => {
             const userData = {
                 username: user?.username,
                 email: user?.email,
-                profileImgPath: user?.profileImgPath
+                profileImgPath: user?.profileImgPath,
+                id: user?.id
             };
             localStorage.setItem("imgPath", JSON.stringify(profileImgPath));
             dispatch(setUserData(userData));

@@ -194,3 +194,8 @@
 Use mongoose.model(name, schema)	GET	/question/getAllQuestion	http://localhost:3000
 2023-07-05	19:25:05	9eab770b-0538-4ad9-996f-a3a2f4ca4ec8	MissingSchemaError: Schema hasn't been registered for model "users".
 Use mongoose.model(name, schema)	GET	/question/getAllQuestion	http://localhost:3000
+2023-07-09	16:25:41	b1718f9e-e9dd-4492-9ccd-838101a2edaf	ValidationError: question validation failed: owner: Cast to ObjectId failed for value "" (type string) at path "owner" because of "BSONError"	POST	/question/createQuestion	http://localhost:3000
+2023-07-09	16:26:17	4b3f8b08-3ba8-4c54-ad40-23c2570e664c	ValidationError: question validation failed: owner: Cast to ObjectId failed for value "" (type string) at path "owner" because of "BSONError"	POST	/question/createQuestion	http://localhost:3000
+2023-07-09	16:26:32	59ee17c7-b01e-4118-a093-f44674406b0a	ValidationError: question validation failed: owner: Cast to ObjectId failed for value "" (type string) at path "owner" because of "BSONError"	POST	/question/createQuestion	http://localhost:3000
+2023-07-09	16:28:37	5d582560-b41f-41d2-9907-95307ff90998	ValidationError: question validation failed: owner: Cast to ObjectId failed for value "" (type string) at path "owner" because of "BSONError"	POST	/question/createQuestion	http://localhost:3000
+2023-07-09	16:29:25	79fefeab-790d-494b-8e61-f2c919d7020c	ValidationError: question validation failed: owner: Cast to ObjectId failed for value "" (type string) at path "owner" because of "BSONError"	POST	/question/createQuestion	http://localhost:3000

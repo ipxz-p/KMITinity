@@ -2,11 +2,11 @@
 import { ImagePlus, X } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { useCreateQuestionMutation } from '../app/api/questionApislice'
-import useAuth from '../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { selectUserData } from '../app/userSlice'
 const CreateQuestion = () => {
     const navigate = useNavigate()
-    const {id} = useAuth()
     const [title, setTitle] = useState('')
     const [des, setDes] = useState('')
     const [tags, setTags] = useState([])
@@ -14,6 +14,7 @@ const CreateQuestion = () => {
     const [imgURL, setImgURL] = useState([]);
     const [tagValue, setTagValue] = useState('')
     const [createQuestion] = useCreateQuestionMutation()
+    const userData = useSelector(selectUserData)
     const handleCreateQuestion = async (e) => {
         e.preventDefault()
         if(title === '' || des === ''){
@@ -21,7 +22,7 @@ const CreateQuestion = () => {
         }
         try {
             let res = await createQuestion({title: title, 
-                description: des, owner: id, 
+                description: des, owner: userData.id, 
                 tags: tags, images: imgs }).unwrap()
             alert(res.message)
             navigate('/')

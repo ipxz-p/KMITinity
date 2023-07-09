@@ -10,23 +10,24 @@ import Profile from "./views/Profile";
 import Questions from "./views/Questions";
 import CreateQuestion from "./views/CreateQuestion";
 import Question from "./views/Question";
+
 function App() {
   return (
     <Routes>
       <Route element={<PersistLogin />}>
         <Route path="/" element={<Navbar />}>
           <Route element={<Layout />}>
-            <Route path="/" element={<Questions />}></Route>
-            <Route path="questions/create" element={<CreateQuestion />}></Route>
-            <Route path="/profile/:username" element={<Profile />}></Route>
-            <Route path="/question/:id" element={<Question />}></Route>
+            <Route path="/" element={<Questions />} />
+            <Route path="/profile/:username" element={<Profile />} />
+            <Route path="questions/create" element={<CreateQuestion />} />
+            <Route path="/question/:id" element={<Question />} />
           </Route>
         </Route>
       </Route>
       <Route path="login" element={<Login />} />
       <Route path="signup" element={<Signup />} />
       <Route path="forgotPassword" element={<ForgotPassword />} />
-      <Route path='*' exact={true} element={<PageNotFound />} />
+      <Route path="*" exact={true} element={<PageNotFound />} />
     </Routes>
   );
 }

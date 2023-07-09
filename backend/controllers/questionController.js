@@ -44,5 +44,28 @@ export const getAllQuestion = async (req, res) => {
         path: 'owner',
         select: 'profileImgPath username'
     }).lean()
-    res.status(200).json(Question)
+    const curDate = new Date;
+    const modifiedQuestions = Question.map((question) => {
+        const createdAt = new Date(question.createdAt);
+        const timeDifference = Math.floor((curDate - createdAt) / 60000)
+        if (timeDifference < 1) {
+            question.createdAt = 'Just now';
+        } else if (timeDifference < 60) {
+            question.createdAt = `${timeDifference} minutes ago`;
+        } else if (timeDifference < 1440) {
+            const hours = Math.floor(timeDifference / 60);
+            question.createdAt = `${hours} hours ago`;
+        } else if (timeDifference < 43200) {
+            const days = Math.floor(timeDifference / 1440);
+            question.createdAt = `${days} days ago`;
+        } else if (timeDifference < 525600) {
+            const months = Math.floor(timeDifference / 43200);
+            question.createdAt = `${months} months ago`;
+        } else {
+            const years = Math.floor(timeDifference / 525600);
+            question.createdAt = `${years} years ago`;
+        }
+        return question;
+    })
+    res.status(200).json(modifiedQuestions)
 }

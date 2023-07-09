@@ -30,7 +30,8 @@ export const authApiSlice = apiSlice.injectEndpoints({
                     dispatch(setUserData({
                         username: null,
                         email: null,
-                        profileImgPath: null
+                        profileImgPath: null,
+                        id: null
                     }))
                     setTimeout(() => {
                         dispatch(apiSlice.util.resetApiState())

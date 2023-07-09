@@ -19,7 +19,8 @@ const baseQueryWithReauth = async (args, api, extraOptions, dispatch) => {
                 const userData = {
                     username: null,
                     email: null,
-                    profileImgPath: null
+                    profileImgPath: null,
+                    id: null
                 };
                 dispatch(setUserData(userData))
                 localStorage.removeItem("imgPath")

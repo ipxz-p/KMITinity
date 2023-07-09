@@ -13,7 +13,8 @@ const authSlice = createSlice({
             const userData = {
                 username: null,
                 email: null,
-                profileImgPath: null
+                profileImgPath: null,
+                id: null
             };
             setUserData(userData)
             localStorage.removeItem("imgPath")

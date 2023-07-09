@@ -1,13 +1,14 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 const userSlice = createSlice({
     name: 'user',
-    initialState: { username: null, profileImgPath: null, email: null },
+    initialState: { username: null, profileImgPath: null, email: null, id: null },
     reducers: {
         setUserData: (state, action) => {
             const userData = action.payload
             state.username = userData?.username
             state.email = userData?.email
             state.profileImgPath = userData?.profileImgPath
+            state.id = userData?.id
         }
     }
 })
@@ -19,9 +20,11 @@ export const selectUserData = createSelector(
     state => state.user.username,
     state => state.user.profileImgPath,
     state => state.user.email,
-    (username, profileImgPath, email) => ({
+    state => state.user.id,
+    (username, profileImgPath, email, id) => ({
         username,
         profileImgPath,
         email,
+        id
     })
 );

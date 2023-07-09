@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import useAuth from '../hooks/useAuth'
 import { useUpdateUserMutation } from '../app/api/userApiSlice'
 import { Mail, User, Pen } from 'lucide-react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { selectUserData } from '../app/userSlice'
+import { questionApiSlice } from '../app/api/questionApislice'
 
 const Profile = () => {
+  const dispatch = useDispatch()
   const [updateUser, {isSuccess, isError}] = useUpdateUserMutation()
-  const {profileImgPath, username, email} = useAuth()
   const [file, setFile] = useState('');
   const [emailProfile, setEmailProfile] = useState('')
   const [usernameProfile, setUsernameProfile] = useState('')
@@ -29,6 +29,7 @@ const Profile = () => {
     try {
       const res = await updateUser({images: file, username: usernameProfile, email: emailProfile}).unwrap();
       setFile(null)
+      dispatch(questionApiSlice.endpoints.getQuestion.initiate(undefined, {forceRefetch: true}))
       alert(res.message)
     } catch (error) {
       console.log(error);

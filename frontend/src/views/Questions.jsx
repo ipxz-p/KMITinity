@@ -1,11 +1,13 @@
 import { Eye, Heart, MessageSquare } from 'lucide-react'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useGetQuestionQuery } from '../app/api/questionApislice'
 
 const Questions = () => {
   const navigate = useNavigate()
-  const { data } = useGetQuestionQuery('questionsList');
+  const { data } = useGetQuestionQuery('questionsList', {
+    refetchOnMountOrArgChange: true
+  });
   const [questions, setQuestions] = useState([]);
   useEffect(() => {
     if (data) {
@@ -27,7 +29,21 @@ const Questions = () => {
           {questions.map((question) => (
               <Link to={`question/${question._id}`} className='p-2 bg-dark-300 rounded-md cursor-pointer flex flex-col justify-between' key={question._id}>
                 <div>
-                  <p className='truncate'>{question['title']}</p>
+                  <div className='flex items-center'>
+                      <img className='h-8 w-8 rounded-full mr-2' src={`${process.env.REACT_APP_BASEURL}/public/img/${question?.owner.profileImgPath}`} alt="" />
+                      <p className=''>
+                      {
+                        question?.owner.username
+                      }
+                      </p>
+                      <div className='flex items-center mt-[0.15rem]'>
+                        <div className='w-1 h-1 bg-gray-400 rounded-full mx-2'></div>
+                        <p className='flex items-center justify-center text-small'>
+                            {question.createdAt}
+                        </p>
+                      </div>
+                  </div>
+                  <p className='truncate mt-2'>{question['title']}</p>
                   <p className='text-small text-gray-400 truncate'>{question['description']}</p>
                   {
                     question.tags.length > 0 && (
@@ -44,16 +60,15 @@ const Questions = () => {
                   }
                 </div>
                 <div className='flex mt-2'>
-                  <div className='flex items-center justify-center'>
+                  {/* <div className='flex items-center justify-center'>
                     <img className='h-7 w-7 rounded-full mr-1' src={`${process.env.REACT_APP_BASEURL}/public/img/${question?.owner.profileImgPath}`} alt="" />
                     <p className=''>
                     {
                       question?.owner.username
                     }
-                    
                     </p>
                   </div>
-                  <div className='w-[0.08rem] mx-2 mt-1 bg-gray-400'></div>
+                  <div className='w-[0.08rem] mx-2 mt-1 bg-gray-400'></div> */}
                   <div className='text-small flex mt-1'>
                     <div className='flex items-center'>
                       <Eye className='h-4 w-4 mr-1' />
