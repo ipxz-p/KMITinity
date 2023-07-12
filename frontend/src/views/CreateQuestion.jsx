@@ -31,6 +31,10 @@ const CreateQuestion = () => {
         }
     }
     const handleAddTags = (e) => {
+        if(e.key === 'Enter' && tagValue.length > 10){
+            e.preventDefault();
+            return alert("Tag can't be longer than 10 characters")
+        }
         if (e.key === 'Enter' && tagValue !== '') {
             setTags((prevValue) => [...prevValue, tagValue])
             setTagValue('')
@@ -90,7 +94,7 @@ const CreateQuestion = () => {
                 <div className='bg-dark-100 rounded-md w-full flex p-2 mt-1'>
                     <input onKeyDown={handleAddTags} value={tagValue} onChange={(e)=>setTagValue(e.target.value)} className='bg-dark-100 w-full outline-none' type="text" placeholder='Tags' autoComplete="off" />
                 </div>
-                <div className='flex gap-1 mt-2'>
+                <div className='flex flex-wrap gap-1 mt-2'>
                     {
                         tags.map((value, index) => (
                             <div className='bg-dark-200 flex items-center px-2 py-1 rounded-full' key={index}>

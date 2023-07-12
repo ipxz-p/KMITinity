@@ -60,15 +60,6 @@ const Questions = () => {
                   }
                 </div>
                 <div className='flex mt-2'>
-                  {/* <div className='flex items-center justify-center'>
-                    <img className='h-7 w-7 rounded-full mr-1' src={`${process.env.REACT_APP_BASEURL}/public/img/${question?.owner.profileImgPath}`} alt="" />
-                    <p className=''>
-                    {
-                      question?.owner.username
-                    }
-                    </p>
-                  </div>
-                  <div className='w-[0.08rem] mx-2 mt-1 bg-gray-400'></div> */}
                   <div className='text-small flex mt-1'>
                     <div className='flex items-center'>
                       <Eye className='h-4 w-4 mr-1' />

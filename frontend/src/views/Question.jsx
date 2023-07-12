@@ -2,7 +2,14 @@ import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useGetQuestionQuery } from '../app/api/questionApislice';
 import { Eye, Heart, MessageSquare } from 'lucide-react';
-
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { Navigation, A11y } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import '../swiper.css'
 const Question = () => {
     const params = useParams()
     const { id } = params;
@@ -24,16 +31,16 @@ const Question = () => {
             }
         }
     })
-
+    const minWidth920 = useMediaQuery('(min-width:920px)');
     return (
         <div>
             {question && (
-                <div >
+                <div className='pb-4'>
                     <div className='flex justify-between items-center border-b-2 pb-2 border-gray-400'>
                         <div>
                             <p className='text-header font-semibold'>{question.title}</p>
                             <div className='flex items-center'>
-                                <img className='w-8 h-8 rounded-full' src={`${process.env.REACT_APP_BASEURL}/public/img/${question.owner.profileImgPath}`} alt="" />
+                                <img className='w-8 h-8 rounded-full ' src={`${process.env.REACT_APP_BASEURL}/public/img/${question.owner.profileImgPath}`} alt="" />
                                 <p className=' ml-2'>
                                     {
                                         question?.owner.username
@@ -55,12 +62,39 @@ const Question = () => {
                             </div>
                         </div>
                         <div className='flex flex-col items-center justify-center'>
-                            <Heart className='h-7 w-7' />
+                            <Heart className='h-7 w-7 cursor-pointer' />
                             <p>{question.like.length}</p>
                         </div>
                     </div>
                     <div className='mt-2 text-gray-400'>
                         {question.description}
+                    </div>
+                    {
+                        question.images.length > 0 && (
+                            <div className='flex mt-2'>
+                                <Swiper
+                                    // install Swiper modules
+                                    modules={[Navigation, A11y]}
+                                    spaceBetween={50}
+                                    slidesPerView={1}
+                                    navigation
+                                    pagination={{ clickable: true }}
+                                >
+                                    {
+                                        Object.keys(question.images).map((image) => (
+                                            <SwiperSlide key={image}>
+                                                <div className='flex justify-center items-center h-full'>
+                                                    <img className='object-cover object-center rounded-md mx-auto ' src={`${process.env.REACT_APP_BASEURL}/public/img/${question.images[image]}`}></img>
+                                                </div>
+                                            </SwiperSlide>
+                                        ))
+                                    }
+                                </Swiper>
+                            </div>
+                        )
+                    }
+                    <div>
+                        <p className='text-header mt-2'><span className='mr-2'>{question.comments.length}</span> Answer</p>
                     </div>
                 </div>
             )}

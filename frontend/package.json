@@ -21,6 +21,7 @@
     "react-scripts": "5.0.1",
     "redux-persist": "^6.0.0",
     "reselect": "^4.1.8",
+    "swiper": "^10.0.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
