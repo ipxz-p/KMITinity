@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useGetQuestionQuery } from '../app/api/questionApislice';
-import { Eye, Heart, MessageSquare } from 'lucide-react';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import { Eye, Heart, MessageSquare, Send } from 'lucide-react';
 import { Navigation, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -10,7 +9,29 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import '../swiper.css'
+
 const Question = () => {
+    const iconSendRef = useRef(null);
+    const [inputValue, setInputValue] = useState('');
+    const handleInputChange = (event) => {
+        setInputValue(event.target.value);
+        autoResizeInput(event.target);
+    };
+    const autoResizeInput = (element) => {
+        element.style.height = '30px';
+        iconSendRef.current.style.alignItems = 'center'
+        if(element.scrollHeight > 30){
+            element.style.height = element.scrollHeight + 'px';
+            iconSendRef.current.style.alignItems = 'end'
+        }
+    };
+    const renderFormattedText = () => {
+        const lines = inputValue.split('\n');
+        if(lines.length > 1){
+            return lines.map((line, index) => <React.Fragment key={index}>{line}<br/></React.Fragment>);
+        }
+        return inputValue
+    };
     const params = useParams()
     const { id } = params;
     const { question } = useGetQuestionQuery('questionsList', {
@@ -31,12 +52,11 @@ const Question = () => {
             }
         }
     })
-    const minWidth920 = useMediaQuery('(min-width:920px)');
     return (
         <div>
             {question && (
                 <div className='pb-4'>
-                    <div className='flex justify-between items-center border-b-2 pb-2 border-gray-400'>
+                    <div className='flex justify-between items-center border-b-2 pb-4 border-gray-400'>
                         <div>
                             <p className='text-header font-semibold'>{question.title}</p>
                             <div className='flex items-center'>
@@ -61,12 +81,12 @@ const Question = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='flex flex-col items-center justify-center'>
+                        <div className='flex flex-col items-center justify-center mt-3'>
                             <Heart className='h-7 w-7 cursor-pointer' />
                             <p>{question.like.length}</p>
                         </div>
                     </div>
-                    <div className='mt-2 text-gray-400'>
+                    <div className='mt-4 text-gray-400'>
                         {question.description}
                     </div>
                     {
@@ -94,8 +114,27 @@ const Question = () => {
                         )
                     }
                     <div>
-                        <p className='text-header mt-2'><span className='mr-2'>{question.comments.length}</span> Answer</p>
+                        <p className='text-header mt-6'><span className='mr-2'>{question.comments.length}</span> Answer</p>
                     </div>
+                    <div>
+                        {renderFormattedText()}
+                    </div>
+                    <form onSubmit={() => alert(555)}>
+                        <div className='bg-dark-300 p-3 rounded-md mt-2 flex gap-3'>
+                            <div className='w-full flex items-center justify-center'>
+                                <textarea 
+                                className='outline-none bg-dark-300 w-full resize-none mt-1 h-[30px]'
+                                onChange={handleInputChange}
+                                value={inputValue}
+                                placeholder='Write a comment...'
+                                >
+                                </textarea>
+                            </div>
+                            <div ref={iconSendRef} className='flex items-center justify-center'>
+                                <Send className='h-5 w-5 cursor-pointer' />
+                            </div>
+                        </div>
+                    </form>
                 </div>
             )}
         </div>

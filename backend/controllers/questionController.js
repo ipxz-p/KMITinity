@@ -69,3 +69,13 @@ export const getAllQuestion = async (req, res) => {
     })
     res.status(200).json(modifiedQuestions)
 }
+export const addComment = async (req, res) => {
+    const {
+        comment,
+        commentId,
+        username,
+        profileImgPath,
+    } = req.body
+    
+
+}
