@@ -46,13 +46,39 @@ export const questionApiSlice = apiSlice.injectEndpoints({
             invalidatesTags: (result, error, arg) => [
                 { type: 'Question', id: arg.id }
             ]
+        }),
+        addComment: builder.mutation({
+            query: commentData => ({
+                url: '/question/addComment',
+                method: 'POST',
+                body: {
+                    ...commentData
+                }
+            }),
+            invalidatesTags: (result, error, arg) => [
+                { type: 'Question', id: arg.id }
+            ]
+        }),
+        addLike: builder.mutation({
+            query: data => ({
+                url: '/question/addLike',
+                method: 'POST',
+                body: {
+                    ...data
+                }
+            }),
+            invalidatesTags: (result, error, arg) => [
+                { type: 'Question', id: arg.id }
+            ]
         })
     })
 })
 
 export const {
     useGetQuestionQuery,
-    useCreateQuestionMutation
+    useCreateQuestionMutation,
+    useAddCommentMutation,
+    useAddLikeMutation
 } = questionApiSlice
 
 export const selectQuestionResult = questionApiSlice.endpoints.getQuestion.select()

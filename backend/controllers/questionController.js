@@ -41,7 +41,7 @@ export const createQuestion = async (req, res) => {
 
 export const getAllQuestion = async (req, res) => {
     const Question = await question.find().populate({
-        path: 'owner',
+        path: 'owner comments.author',
         select: 'profileImgPath username'
     }).lean()
     const curDate = new Date;
@@ -72,10 +72,40 @@ export const getAllQuestion = async (req, res) => {
 export const addComment = async (req, res) => {
     const {
         comment,
-        commentId,
-        username,
-        profileImgPath,
+        author,
+        questionID
     } = req.body
-    
-
+    const Question = await question.findById(questionID).exec()
+    if(!Question){
+        return res.status(400).json({ message: 'Question not found' })
+    }
+    if(!comment){
+        return res.status(400).json({message: 'Please enter comment'})
+    }
+    Question.comments.push({
+        comment: comment,
+        author: author,
+    })
+    await Question.save()
+    return res.status(200).json({message: "Success"})
+}
+export const addLike = async (req, res) => {
+    const {
+        userID,
+        questionID
+    } = req.body
+    const Question = await question.findById(questionID).exec()
+    if(!Question){
+        return res.status(400).json({ message: 'Question not found' })
+    }
+    const userIndex = Question.like.indexOf(userID)
+    if(userIndex === -1){
+        Question.like.push(userID)
+        res.send("add")
+    }else{
+        Question.like.splice(userIndex, 1)
+        res.send("delete")
+    }
+    await Question.save()
+    return res.status(200)
 }

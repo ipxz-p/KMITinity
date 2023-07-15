@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useGetQuestionQuery } from '../app/api/questionApislice';
+import { useAddCommentMutation, useAddLikeMutation, useGetQuestionQuery } from '../app/api/questionApislice';
 import { Eye, Heart, MessageSquare, Send } from 'lucide-react';
 import { Navigation, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -8,30 +8,11 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import '../swiper.css'
+import '../asset/css/swiper.css'
+import { useSelector } from 'react-redux';
+import { selectUserData } from '../app/userSlice';
 
 const Question = () => {
-    const iconSendRef = useRef(null);
-    const [inputValue, setInputValue] = useState('');
-    const handleInputChange = (event) => {
-        setInputValue(event.target.value);
-        autoResizeInput(event.target);
-    };
-    const autoResizeInput = (element) => {
-        element.style.height = '30px';
-        iconSendRef.current.style.alignItems = 'center'
-        if(element.scrollHeight > 30){
-            element.style.height = element.scrollHeight + 'px';
-            iconSendRef.current.style.alignItems = 'end'
-        }
-    };
-    const renderFormattedText = () => {
-        const lines = inputValue.split('\n');
-        if(lines.length > 1){
-            return lines.map((line, index) => <React.Fragment key={index}>{line}<br/></React.Fragment>);
-        }
-        return inputValue
-    };
     const params = useParams()
     const { id } = params;
     const { question } = useGetQuestionQuery('questionsList', {
@@ -50,8 +31,71 @@ const Question = () => {
             return {
                 question: null
             }
-        }
+        },
+        refetchOnMountOrArgChange: true
     })
+    const checkClicked = false;
+    const questionLegth = question?.like.length
+    const iconSendRef = useRef(null);
+    const textareaRef = useRef(null)
+    const [inputValue, setInputValue] = useState('');
+    const handleInputChange = (event) => {
+        setInputValue(event.target.value);
+        autoResizeInput(event.target);
+    };
+    const autoResizeInput = (element) => {
+        element.style.height = '30px';
+        iconSendRef.current.style.alignItems = 'center'
+        if (element.scrollHeight > 30) {
+            element.style.height = element.scrollHeight + 'px';
+            iconSendRef.current.style.alignItems = 'end'
+        }
+    };
+    const userData = useSelector(selectUserData)
+    const [addComment] = useAddCommentMutation()
+    const handleAddComment = async (e) => {
+        e.preventDefault()
+        if (inputValue.replace(/\n/g, "") === '') {
+            return alert("Please enter a comment")
+        }
+        try {
+            await addComment({ comment: inputValue, author: userData.id, questionID: id }).unwrap()
+            setInputValue('')
+            textareaRef.current.style.height = '30px';
+            iconSendRef.current.style.alignItems = 'center'
+        } catch (error) {
+            alert(error)
+        }
+    }
+    const formattedDate = (date) => {
+        const mongodbDate = new Date(date); // ตัวอย่างวันที่จาก MongoDB
+        const day = mongodbDate.getDate().toString().padStart(2, "0");
+        const month = (mongodbDate.getMonth() + 1).toString().padStart(2, "0");
+        const year = mongodbDate.getFullYear().toString();
+        return `${day}/${month}/${year}`;
+    }
+    const formattedTime = (date) => {
+        const mongodbDate = new Date(date); // ตัวอย่างวันที่จาก MongoDB
+        const hours = mongodbDate.getHours().toString().padStart(2, "0");
+        const minutes = mongodbDate.getMinutes().toString().padStart(2, "0");
+        return `${hours}:${minutes}`;
+    }
+    const renderFormattedText = (comment) => {
+        const commentSpllit = comment.split('\n');
+        if (commentSpllit.length > 1) {
+            return commentSpllit.map((line, index) => <React.Fragment key={index}>{line}<br /></React.Fragment>);
+        }
+        return comment
+    };
+    const [addLike] = useAddLikeMutation()
+    const handleAddLike = async () => {
+        
+        try {
+            await addLike({userID: userData.id, questionID: id})
+        } catch (error) {
+            console.log(error);
+        }
+    }
     return (
         <div>
             {question && (
@@ -82,7 +126,9 @@ const Question = () => {
                             </div>
                         </div>
                         <div className='flex flex-col items-center justify-center mt-3'>
-                            <Heart className='h-7 w-7 cursor-pointer' />
+                            <Heart onClick={handleAddLike} className='h-7 w-7 cursor-pointer'
+                            fill={question.like.includes(userData?.id) ? '#fff' : 'black'}
+                            />
                             <p>{question.like.length}</p>
                         </div>
                     </div>
@@ -117,24 +163,58 @@ const Question = () => {
                         <p className='text-header mt-6'><span className='mr-2'>{question.comments.length}</span> Answer</p>
                     </div>
                     <div>
-                        {renderFormattedText()}
-                    </div>
-                    <form onSubmit={() => alert(555)}>
-                        <div className='bg-dark-300 p-3 rounded-md mt-2 flex gap-3'>
-                            <div className='w-full flex items-center justify-center'>
-                                <textarea 
-                                className='outline-none bg-dark-300 w-full resize-none mt-1 h-[30px]'
-                                onChange={handleInputChange}
-                                value={inputValue}
-                                placeholder='Write a comment...'
-                                >
-                                </textarea>
+                        <form>
+                            <div className='bg-dark-300 p-3 rounded-md mt-2 flex gap-3'>
+                                <div className='w-full flex items-center justify-center'>
+                                    <textarea
+                                        ref={textareaRef}
+                                        className=' scrollbar-hidden outline-none bg-dark-300 w-full resize-none mt-1 h-[30px] max-h-[200px]'
+                                        onKeyDown={(event)=>{
+                                            if(event.key === "Enter" && !event.shiftKey){
+                                                handleAddComment(event)
+                                            }
+                                        }}
+                                        onChange={handleInputChange}
+                                        value={inputValue}
+                                        placeholder='Write a comment...'
+                                    >
+                                    </textarea>
+                                </div>
+                                <div ref={iconSendRef} className='flex items-center justify-center'>
+                                    <Send onClick={handleAddComment} className='h-5 w-5 cursor-pointer' />
+                                </div>
                             </div>
-                            <div ref={iconSendRef} className='flex items-center justify-center'>
-                                <Send className='h-5 w-5 cursor-pointer' />
-                            </div>
+                        </form>
+                        <div className='mt-6 flex flex-col gap-2'>
+                            {
+                                Object.keys(question?.comments).map((comment) => (
+                                    <div className='bg-dark-300 p-3 rounded-md' key={comment}>
+                                        <div className='flex items-center'>
+                                            <img className='w-8 h-8 rounded-full ' src={`${process.env.REACT_APP_BASEURL}/public/img/${question.comments[comment].author.profileImgPath}`} alt="" />
+                                            <p className=' ml-2'>
+                                                {
+                                                    question.comments[comment].author.username
+                                                }
+                                            </p>
+                                            <div className='flex items-center mt-[0.15rem]'>
+                                                <div className='w-1 h-1 bg-gray-400 rounded-full mx-2'></div>
+                                                <p className='flex items-center justify-center text-small'>
+                                                    {formattedDate(question.comments[comment].date)}
+                                                </p>
+                                            </div>
+                                            <div className='w-[0.08rem] h-[15px] bg-gray-400 mx-2 mt-[0.15rem]'></div>
+                                            <p className='flex items-center justify-center text-small mt-[0.15rem]'>
+                                                {formattedTime(question.comments[comment].date)}
+                                            </p>
+                                        </div>
+                                        <p className='mt-2'>
+                                            {renderFormattedText(question.comments[comment].comment)}
+                                        </p>
+                                    </div>
+                                ))
+                            }
                         </div>
-                    </form>
+                    </div>
                 </div>
             )}
         </div>

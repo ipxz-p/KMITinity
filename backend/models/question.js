@@ -9,7 +9,22 @@ const questionSchema = new mongoose.Schema({
         required: true
     },
     images: [String],
-    comments: [Object],
+    comments: [{
+        comment: {
+            type: String,
+            required: true
+        },
+        author: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'users',
+            required: true
+        },
+        like: [String],
+        date: {
+            type: Date,
+            default: Date.now
+        }
+    }],
     like: [String],
     views: [String],
     owner: {
