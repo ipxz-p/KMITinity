@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { Outlet, Link, useNavigate } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 import { useLogoutMutation } from '../app/api/authApiSlice'
-import { LogOut, User } from 'lucide-react'
+import { HelpCircle, LogOut, User } from 'lucide-react'
 import { useGetUserQuery } from '../app/api/userApiSlice'
 import { selectUserData } from '../app/userSlice'
 import { useSelector } from 'react-redux'
@@ -57,7 +57,7 @@ const Navbar = () => {
                   src={`${process.env.REACT_APP_BASEURL}/public/img/${userData?.profileImgPath}`} alt="" />
                   {showMenu && (
                     <div className='bg-dark-100 border-2 border-white rounded-md absolute top-[120%] right-0'>
-                    <div className='cursor-pointer flex items-center px-2 py-1' onClick={(e)=>{
+                    <div className='cursor-pointer flex items-center px-3 py-1' onClick={(e)=>{
                       e.preventDefault()
                       const bool = false;
                       setShowMenu(bool)
@@ -66,7 +66,17 @@ const Navbar = () => {
                       <User className='h-4 w-4'/>
                       <p className='ml-2'>Profile</p>
                     </div>
-                    <div className='cursor-pointer flex items-center px-2 py-1' onClick={()=>{
+                    <div className='cursor-pointer flex items-center px-3 py-1 ' onClick={(e)=>{
+                      e.preventDefault()
+                      const bool = false;
+                      setShowMenu(bool)
+                      navigate(`/profile/${username}`)
+                      }}>
+                      <HelpCircle className='h-4 w-4 flex-shrink-0'/>
+                      <p className='ml-2 whitespace-nowrap w-full'>Your questions</p>
+                    </div>
+                    <div className='bg-gray-400 h-[1px] w-full my-1'></div>
+                    <div className='cursor-pointer flex items-center px-3 py-1' onClick={()=>{
                       setShowMenu(false);
                       logout()
                     }}>

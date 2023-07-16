@@ -32,10 +32,13 @@ const Question = () => {
                 question: null
             }
         },
-        refetchOnMountOrArgChange: true
     })
-    const checkClicked = false;
-    const questionLegth = question?.like.length
+    const [checkLiked, setCheckLiked] = useState(false);
+    const [questionLegth, setQuestionLegth] = useState(question?.like.length)
+    useEffect(()=>{
+        setQuestionLegth(question?.like.length)
+        setCheckLiked(question?.like.includes(userData?.id))
+    }, [question])
     const iconSendRef = useRef(null);
     const textareaRef = useRef(null)
     const [inputValue, setInputValue] = useState('');
@@ -91,6 +94,12 @@ const Question = () => {
     const handleAddLike = async () => {
         
         try {
+            if(checkLiked){
+                setQuestionLegth((prev)=>prev-1)
+            }else{
+                setQuestionLegth((prev)=>prev+1)
+            }
+            setCheckLiked((prev)=>!prev)
             await addLike({userID: userData.id, questionID: id})
         } catch (error) {
             console.log(error);
@@ -127,9 +136,9 @@ const Question = () => {
                         </div>
                         <div className='flex flex-col items-center justify-center mt-3'>
                             <Heart onClick={handleAddLike} className='h-7 w-7 cursor-pointer'
-                            fill={question.like.includes(userData?.id) ? '#fff' : 'black'}
+                            fill={checkLiked ? '#fff' : 'black'}
                             />
-                            <p>{question.like.length}</p>
+                            <p className='select-none'>{questionLegth}</p>
                         </div>
                     </div>
                     <div className='mt-4 text-gray-400'>
