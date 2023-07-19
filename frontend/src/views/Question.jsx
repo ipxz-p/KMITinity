@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useAddCommentMutation, useAddLikeMutation, useGetQuestionQuery } from '../app/api/questionApislice';
 import { Eye, Heart, MessageSquare, Send } from 'lucide-react';
 import { Navigation, A11y } from 'swiper/modules';
@@ -11,33 +11,26 @@ import 'swiper/css/scrollbar';
 import '../asset/css/swiper.css'
 import { useSelector } from 'react-redux';
 import { selectUserData } from '../app/userSlice';
-
+import CircularProgress from '@mui/material/CircularProgress';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 const Question = () => {
     const params = useParams()
     const { id } = params;
-    const { question } = useGetQuestionQuery('questionsList', {
-        selectFromResult: ({ data }) => {
-            if (data) {
-                const questionKeys = Object.keys(data.entities);
-                for (let i = 0; i < questionKeys.length; i++) {
-                    const questionProp = questionKeys[i];
-                    if (data.entities[questionProp]._id === id) {
-                        return {
-                            question: data.entities[questionProp]
-                        };
-                    }
-                }
-            }
-            return {
-                question: null
-            }
-        },
-    })
+    const { data: queryQuestion, isLoading, isSuccess } = useGetQuestionQuery(id, {refetchOnMountOrArgChange: true})
+    const [question, setQuestion] = useState(null)
+    useEffect(() => {
+        if (queryQuestion) {
+            setQuestion(queryQuestion?.entities?.[id])
+        }
+    }, [queryQuestion])
     const [checkLiked, setCheckLiked] = useState(false);
-    const [questionLegth, setQuestionLegth] = useState(question?.like.length)
-    useEffect(()=>{
-        setQuestionLegth(question?.like.length)
-        setCheckLiked(question?.like.includes(userData?.id))
+    const [questionLegth, setQuestionLegth] = useState(null)
+    const userData = useSelector(selectUserData)
+    useEffect(() => {
+        if(question){
+            setQuestionLegth(question?.like.length)
+            setCheckLiked(question?.like.includes(userData?.id))
+        }
     }, [question])
     const iconSendRef = useRef(null);
     const textareaRef = useRef(null)
@@ -54,7 +47,6 @@ const Question = () => {
             iconSendRef.current.style.alignItems = 'end'
         }
     };
-    const userData = useSelector(selectUserData)
     const [addComment] = useAddCommentMutation()
     const handleAddComment = async (e) => {
         e.preventDefault()
@@ -92,21 +84,43 @@ const Question = () => {
     };
     const [addLike] = useAddLikeMutation()
     const handleAddLike = async () => {
-        
         try {
-            if(checkLiked){
-                setQuestionLegth((prev)=>prev-1)
-            }else{
-                setQuestionLegth((prev)=>prev+1)
+            if (checkLiked) {
+                setQuestionLegth((prev) => prev - 1)
+            } else {
+                setQuestionLegth((prev) => prev + 1)
             }
-            setCheckLiked((prev)=>!prev)
-            await addLike({userID: userData.id, questionID: id})
+            setCheckLiked((prev) => !prev)
+            await addLike({ userID: userData.id, questionID: id })
         } catch (error) {
             console.log(error);
         }
     }
+    // mui customization theme
+    const theme = createTheme({
+        palette: {
+            white: {
+                main: '#fff',
+            },
+        },
+    });
     return (
         <div>
+            {
+                (!question && isLoading) && (
+                    <ThemeProvider theme={theme}>
+                        <div className='mt-20 flex justify-center items-center'>
+                            <CircularProgress color='white' />
+                        </div>
+                    </ThemeProvider>
+                )
+                
+            }
+            {
+                (!question && isSuccess) && (
+                    <p className='text-header'>No question found</p>
+                )
+            }
             {question && (
                 <div className='pb-4'>
                     <div className='flex justify-between items-center border-b-2 pb-4 border-gray-400'>
@@ -136,7 +150,7 @@ const Question = () => {
                         </div>
                         <div className='flex flex-col items-center justify-center mt-3'>
                             <Heart onClick={handleAddLike} className='h-7 w-7 cursor-pointer'
-                            fill={checkLiked ? '#fff' : 'black'}
+                                fill={checkLiked ? '#fff' : 'black'}
                             />
                             <p className='select-none'>{questionLegth}</p>
                         </div>
@@ -178,8 +192,8 @@ const Question = () => {
                                     <textarea
                                         ref={textareaRef}
                                         className=' scrollbar-hidden outline-none bg-dark-300 w-full resize-none mt-1 h-[30px] max-h-[200px]'
-                                        onKeyDown={(event)=>{
-                                            if(event.key === "Enter" && !event.shiftKey){
+                                        onKeyDown={(event) => {
+                                            if (event.key === "Enter" && !event.shiftKey) {
                                                 handleAddComment(event)
                                             }
                                         }}
@@ -194,39 +208,48 @@ const Question = () => {
                                 </div>
                             </div>
                         </form>
-                        <div className='mt-6 flex flex-col gap-2'>
-                            {
-                                Object.keys(question?.comments).map((comment) => (
-                                    <div className='bg-dark-300 p-3 rounded-md' key={comment}>
-                                        <div className='flex items-center'>
-                                            <img className='w-8 h-8 rounded-full ' src={`${process.env.REACT_APP_BASEURL}/public/img/${question.comments[comment].author.profileImgPath}`} alt="" />
-                                            <p className=' ml-2'>
-                                                {
-                                                    question.comments[comment].author.username
-                                                }
-                                            </p>
-                                            <div className='flex items-center mt-[0.15rem]'>
-                                                <div className='w-1 h-1 bg-gray-400 rounded-full mx-2'></div>
-                                                <p className='flex items-center justify-center text-small'>
-                                                    {formattedDate(question.comments[comment].date)}
+                        {
+                            Object.keys(question?.comments).length > 0 && (
+                                <div className='mt-6 flex flex-col gap-2'>
+                                    {
+
+                                        Object.keys(question?.comments).map((comment) => (
+                                            <div className='bg-dark-300 p-3 rounded-md' key={comment}>
+                                                <div className='flex items-center'>
+                                                    <img className='w-8 h-8 rounded-full ' src={`${process.env.REACT_APP_BASEURL}/public/img/${question.comments[comment].author.profileImgPath}`} alt="" />
+                                                    <p className=' ml-2'>
+                                                        {
+                                                            question.comments[comment].author.username
+
+                                                        }
+                                                    </p>
+                                                    <div className='flex items-center mt-[0.15rem]'>
+                                                        <div className='w-1 h-1 bg-gray-400 rounded-full mx-2'></div>
+                                                        <p className='flex items-center justify-center text-small'>
+                                                            {formattedDate(question.comments[comment].date)}
+                                                        </p>
+                                                    </div>
+                                                    <div className='w-[0.08rem] h-[15px] bg-gray-400 mx-2 mt-[0.15rem]'></div>
+                                                    <p className='flex items-center justify-center text-small mt-[0.15rem]'>
+                                                        {formattedTime(question.comments[comment].date)}
+                                                    </p>
+                                                </div>
+                                                <p className='mt-2'>
+                                                    {renderFormattedText(question.comments[comment].comment)}
                                                 </p>
                                             </div>
-                                            <div className='w-[0.08rem] h-[15px] bg-gray-400 mx-2 mt-[0.15rem]'></div>
-                                            <p className='flex items-center justify-center text-small mt-[0.15rem]'>
-                                                {formattedTime(question.comments[comment].date)}
-                                            </p>
-                                        </div>
-                                        <p className='mt-2'>
-                                            {renderFormattedText(question.comments[comment].comment)}
-                                        </p>
-                                    </div>
-                                ))
-                            }
-                        </div>
+                                        ))
+                                    }
+                                </div>
+                            )
+                        }
+
                     </div>
                 </div>
-            )}
+            )
+            }
         </div>
+
     )
 }
 

@@ -109,3 +109,24 @@ export const addLike = async (req, res) => {
     await Question.save()
     return res.status(200)
 }
+
+export const handleViewQuestion = async (req, res) => {
+    const {
+        userID,
+        questionID
+    } = req.body
+    const Question = await question.findById(questionID).exec()
+    if(!Question){
+        return res.status(400).json({ message: 'Question not found' })
+    }
+    const userIndex = Question.views.indexOf(userID)
+    if(userIndex === -1){
+        Question.views.push(userID)
+        res.send("add")
+    }else{
+        Question.views.splice(userIndex, 1)
+        res.send("delete")
+    }
+    await Question.save()
+    return res.status(200)
+}

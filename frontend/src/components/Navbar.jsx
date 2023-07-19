@@ -56,7 +56,7 @@ const Navbar = () => {
                   className='h-[2.3rem] w-[2.3rem] ml-4 rounded-full cursor-pointer' 
                   src={`${process.env.REACT_APP_BASEURL}/public/img/${userData?.profileImgPath}`} alt="" />
                   {showMenu && (
-                    <div className='bg-dark-100 border-2 border-white rounded-md absolute top-[120%] right-0'>
+                    <div className='bg-dark-100 border-2 border-white rounded-md absolute top-[120%] py-1 right-0'>
                     <div className='cursor-pointer flex items-center px-3 py-1' onClick={(e)=>{
                       e.preventDefault()
                       const bool = false;

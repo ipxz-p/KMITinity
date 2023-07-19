@@ -66,7 +66,10 @@ export const questionApiSlice = apiSlice.injectEndpoints({
                 body: {
                     ...data
                 }
-            })
+            }),
+            invalidatesTags: (result, error, arg) => [
+                { type: 'Question', id: arg.id }
+            ]
         })
     })
 })
