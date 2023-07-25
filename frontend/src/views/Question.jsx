@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useAddCommentMutation, useAddLikeMutation, useGetQuestionQuery } from '../app/api/questionApislice';
+import { questionApiSlice, useAddCommentMutation, useAddLikeMutation, useGetQuestionQuery, useViewQuestionMutation } from '../app/api/questionApislice';
 import { Eye, Heart, MessageSquare, Send } from 'lucide-react';
 import { Navigation, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -9,14 +9,15 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import '../asset/css/swiper.css'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectUserData } from '../app/userSlice';
 import CircularProgress from '@mui/material/CircularProgress';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 const Question = () => {
+    const dispatch = useDispatch()
     const params = useParams()
     const { id } = params;
-    const { data: queryQuestion, isLoading, isSuccess } = useGetQuestionQuery(id, {refetchOnMountOrArgChange: true})
+    const { data: queryQuestion, isLoading, isSuccess } = useGetQuestionQuery(id, { refetchOnMountOrArgChange: true })
     const [question, setQuestion] = useState(null)
     useEffect(() => {
         if (queryQuestion) {
@@ -27,11 +28,25 @@ const Question = () => {
     const [questionLegth, setQuestionLegth] = useState(null)
     const userData = useSelector(selectUserData)
     useEffect(() => {
-        if(question){
+        if (question) {
             setQuestionLegth(question?.like.length)
             setCheckLiked(question?.like.includes(userData?.id))
         }
     }, [question])
+    const [viewQuestion] = useViewQuestionMutation()
+    const handleViewQuestion = async () => {
+        try {
+            await viewQuestion({ userID: userData.id, questionID: id })
+            dispatch(questionApiSlice.endpoints.getQuestion.initiate(undefined, {forceRefetch: true}))
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        if (userData.id) {
+            handleViewQuestion()
+        }
+    }, [queryQuestion, userData])
     const iconSendRef = useRef(null);
     const textareaRef = useRef(null)
     const [inputValue, setInputValue] = useState('');
@@ -97,24 +112,15 @@ const Question = () => {
         }
     }
     // mui customization theme
-    const theme = createTheme({
-        palette: {
-            white: {
-                main: '#fff',
-            },
-        },
-    });
     return (
         <div>
             {
                 (!question && isLoading) && (
-                    <ThemeProvider theme={theme}>
-                        <div className='mt-20 flex justify-center items-center'>
-                            <CircularProgress color='white' />
-                        </div>
-                    </ThemeProvider>
+                    <div className='mt-20 flex justify-center items-center'>
+                        <CircularProgress color='white' />
+                    </div>
                 )
-                
+
             }
             {
                 (!question && isSuccess) && (

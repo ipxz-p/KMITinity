@@ -70,6 +70,18 @@ export const questionApiSlice = apiSlice.injectEndpoints({
             invalidatesTags: (result, error, arg) => [
                 { type: 'Question', id: arg.id }
             ]
+        }),
+        viewQuestion: builder.mutation({
+            query: data => ({
+                url: '/question/viewQuestion',
+                method: 'POST',
+                body: {
+                    ...data
+                }
+            }),
+            invalidatesTags: (result, error, arg) => [
+                { type: 'Question', id: arg.id }
+            ]
         })
     })
 })
@@ -78,7 +90,8 @@ export const {
     useGetQuestionQuery,
     useCreateQuestionMutation,
     useAddCommentMutation,
-    useAddLikeMutation
+    useAddLikeMutation,
+    useViewQuestionMutation
 } = questionApiSlice
 
 export const selectQuestionResult = questionApiSlice.endpoints.getQuestion.select()

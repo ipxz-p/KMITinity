@@ -10,25 +10,28 @@ import Profile from "./views/Profile";
 import Questions from "./views/Questions";
 import CreateQuestion from "./views/CreateQuestion";
 import Question from "./views/Question";
-
+import { ThemeProvider, createTheme } from "@mui/material";
+import { theme } from "./theme";
 function App() {
   return (
-    <Routes>
-      <Route element={<PersistLogin />}>
-        <Route path="/" element={<Navbar />}>
-          <Route element={<Layout />}>
-            <Route path="/" element={<Questions />} />
-            <Route path="/profile/:username" element={<Profile />} />
-            <Route path="questions/create" element={<CreateQuestion />} />
-            <Route path="/question/:id" element={<Question />} />
+    <ThemeProvider theme={theme}>
+      <Routes>
+        <Route element={<PersistLogin />}>
+          <Route path="/" element={<Navbar />}>
+            <Route element={<Layout />}>
+              <Route path="/" element={<Questions />} />
+              <Route path="/profile/:username" element={<Profile />} />
+              <Route path="questions/create" element={<CreateQuestion />} />
+              <Route path="/question/:id" element={<Question />} />
+            </Route>
           </Route>
         </Route>
-      </Route>
-      <Route path="login" element={<Login />} />
-      <Route path="signup" element={<Signup />} />
-      <Route path="forgotPassword" element={<ForgotPassword />} />
-      <Route path="*" exact={true} element={<PageNotFound />} />
-    </Routes>
+        <Route path="login" element={<Login />} />
+        <Route path="signup" element={<Signup />} />
+        <Route path="forgotPassword" element={<ForgotPassword />} />
+        <Route path="*" exact={true} element={<PageNotFound />} />
+      </Routes>
+    </ThemeProvider>
   );
 }
 
