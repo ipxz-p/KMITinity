@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { setCredentials } from '../authSlice'
 import { setUserData } from '../userSlice'
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'http://localhost:3500',
+    baseUrl: 'https://kmitinity-api.onrender.com',
     credentials: 'include',
 })
 
