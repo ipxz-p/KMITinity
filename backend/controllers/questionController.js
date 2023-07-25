@@ -101,16 +101,14 @@ export const addLike = async (req, res) => {
     const userIndex = Question.like.indexOf(userID)
     if(userIndex === -1){
         Question.like.push(userID)
-        res.send("add")
     }else{
         Question.like.splice(userIndex, 1)
-        res.send("delete")
     }
     await Question.save()
     return res.status(200)
 }
 
-export const handleViewQuestion = async (req, res) => {
+export const viewQuestion = async (req, res) => {
     const {
         userID,
         questionID
@@ -122,11 +120,31 @@ export const handleViewQuestion = async (req, res) => {
     const userIndex = Question.views.indexOf(userID)
     if(userIndex === -1){
         Question.views.push(userID)
-        res.send("add")
-    }else{
-        Question.views.splice(userIndex, 1)
-        res.send("delete")
     }
     await Question.save()
-    return res.status(200)
+    return res.status(200).json({message: "Success"})
+}
+
+export const updateQuestion = async () => {
+    const {
+        userID,
+        title,
+        description,
+        questionID
+    } = req.body
+    const Question = await question.findById(questionID).exec()
+    if(!Question){
+        return res.status(400).json({ message: 'Question not found' })
+    }
+    if(Question.owner !== userID){
+        return res.status(400).json({message: "You don't have permission"})
+    }
+    if(title !== '' && title !== Question.title){
+        Question.title = title
+    }
+    if(description !== '' && description !== Question.description){
+        Question.description = description
+    }
+    Question.save()
+    return res.status(200).json({message: "Success"})
 }
